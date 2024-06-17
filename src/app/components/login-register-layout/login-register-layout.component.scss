@@ -1,0 +1,50 @@
+main{
+    display: flex;
+    height: 100%;
+    font-size: 24px;
+    a{
+        color: inherit;
+    }
+
+    
+    section.form-container{
+        display: flex;
+        padding: 2.5em;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-between;
+        flex-basis: 40%;
+        background-color: var(--background);
+        color: var(--foreground);
+        min-width: 250px;
+        .action-wrapper{
+            display: flex;
+            flex-basis: 20%;
+            align-items: center;
+            justify-content: space-between;
+            align-self: center;
+            flex-direction: column;
+            .primary-button{
+                border: 1px solid var(--border);
+                background-color: transparent;
+                border-radius: var(--radius);
+                padding: 2em;
+                aspect-ratio: 1;
+                cursor: pointer;
+                &:hover{
+                    border-color: var(--ring);
+                }
+            }
+        }
+    }
+
+    section.content-container{
+        display: flex;
+        overflow: hidden;
+        img.illustration{
+            display: block;
+            max-width: 100%;
+            object-fit: cover;
+        }
+    }
+}
