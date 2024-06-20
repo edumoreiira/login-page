@@ -1,5 +1,6 @@
 <app-login-register-layout
 pageTitle="Fazer login"
+[loginSocial]="true"
 (submit)="submit()"
 >
 
@@ -17,6 +18,27 @@ pageTitle="Fazer login"
     >
     </app-form-input>
 </form>
+
+<ng-container login-social>
+
+<app-social-login-methods
+iconPath="/assets/social-icons/facebook.png"
+hslColor="214 90% 53%"
+maxHeight="40px"
+/>
+<app-social-login-methods
+iconPath="/assets/social-icons/google.png"
+hslColor="0 0% 92%"
+maxHeight="40px"
+/>
+<app-social-login-methods
+iconPath="/assets/social-icons/apple.png"
+hslColor="0 0% 0%"
+maxHeight="40px"
+/>
+
+</ng-container>
+
 
 <ng-container primary-button>
     <i class="fi fi-rr-arrow-small-right primary-button-icon"></i>

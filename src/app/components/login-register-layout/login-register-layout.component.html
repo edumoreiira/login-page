@@ -1,5 +1,5 @@
 <main>
-    <section class="form-container">
+    <section class="form-container drk">
         <h1 class="logo">LOGO</h1>
 
         <div class="form-wrapper">
@@ -7,9 +7,23 @@
             <ng-content>
             </ng-content>
             <div class="info-wrapper">
-                <div class="login-social"></div>
-                <input type="checkbox" name="keep-connection" id="keep-connection">
-                <label for="keep-connection">Manter login</label>
+
+                <div *ngIf="loginSocial" class="login-social">
+                    <ng-content select="[login-social]"></ng-content>
+                </div>
+
+                <div class="keep-connection-wrapper">
+                    <button
+                        (click)="keepLogin = !keepLogin"
+                        role="checkbox"
+                        [attr.aria-checked]="keepLogin ? true : false"
+                        name="keep-connection" 
+                        id="keep-connection">
+
+                        <span *ngIf="keepLogin"><i class="fi fi-sr-check"></i></span>
+                    </button>
+                    <label for="keep-connection">Manter login</label>
+                </div>
             </div>
         </div>
         

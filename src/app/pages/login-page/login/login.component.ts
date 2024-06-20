@@ -3,11 +3,12 @@ import { LoginRegisterLayoutComponent } from '../../../components/login-register
 import { FormInputComponent } from '../../../components/form-input/form-input.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginForm} from '../../../models/login.interface';
+import { SocialLoginMethodsComponent } from '../../../components/social-login-methods/social-login-methods.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [LoginRegisterLayoutComponent, FormInputComponent, ReactiveFormsModule],
+  imports: [LoginRegisterLayoutComponent, FormInputComponent, ReactiveFormsModule, SocialLoginMethodsComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

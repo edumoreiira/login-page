@@ -1,10 +1,13 @@
 input{
-    font-size: 1em;
+    font-size: .8em;
     border-radius: var(--radius);
     border: 1px solid hsl(var(--input));
-    padding: .50em 1em;
+    padding: .75em 1.25em;
     width: 100%;
+    background-color: transparent;
+    text-overflow: ellipsis;
     &:focus{
         outline: hsl(var(--ring)) solid 2px;
+        outline-offset: -1px;
     }
 }

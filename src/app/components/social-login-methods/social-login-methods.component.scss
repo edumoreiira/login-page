@@ -1,0 +1,18 @@
+.icon{
+    // max-height: 40px; setted by html
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    img{
+        height: 50%;
+    }
+}
+
+.icon{
+    background-color: hsl(var(--dynamic-color));
+    &:hover{
+        background-color: hsl(var(--dynamic-color) / 0.8) ;
+    }
+}
