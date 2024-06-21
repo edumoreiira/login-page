@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, input } from '@angular/core';
 
 type HSL = `${number} ${number}% ${number}%`;
 @Component({
@@ -14,21 +14,23 @@ export class SocialLoginMethodsComponent {
   @Input() linkPage: string = "#"
   @Input() iconPath: string = "";
   @Input() maxHeight: string = "100%";
-  @Input() set hslColor(value:string){
+  // hslColor = input<HSL>('0 0% 0%');
+  @Input() hslColor : HSL = "0 0% 0%"
+  // @Input() set hslColor(value:string){
 
-    if(this.isValidHSL(value)){
-      this._hslColor = value as HSL;
-    }else{
-      console.error("Invalid HSL color parameter")
-    }
-  }
+  //   if(this.isValidHSL(value)){
+  //     this._hslColor = value as HSL;
+  //   }else{
+  //     console.error("Invalid HSL color parameter")
+  //   }
+  // }
   
-  get hslColor():HSL{
-    return this._hslColor;
-  }
+  // get hslColor():HSL{
+  //   return this._hslColor;
+  // }
 
-  private isValidHSL(value: string): boolean{
-    const validHSLRegex = /^\d+ \d+% \d+%$/;
-    return validHSLRegex.test(value);
-  }
+  // private isValidHSL(value: string): boolean{
+  //   const validHSLRegex = /^\d+ \d+% \d+%$/;
+  //   return validHSLRegex.test(value);
+  // }
 }
