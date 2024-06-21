@@ -1,13 +1,75 @@
-input{
+.input-wrapper{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: .8em;
-    border-radius: var(--radius);
-    border: 1px solid hsl(var(--input));
-    padding: .75em 1.25em;
-    width: 100%;
-    background-color: transparent;
-    text-overflow: ellipsis;
-    &:focus{
-        outline: hsl(var(--ring)) solid 2px;
-        outline-offset: -1px;
+    input{
+        color: hsl(var(--card-foreground));
+        font-size: 1em;
+        border-radius: var(--radius);
+        border: 1px solid hsl(var(--input));
+        padding: .75em 1.25em;
+        width: 100%;
+        background-color: transparent;
+        text-overflow: ellipsis;
+        outline: 2px solid transparent;
+        transition: outline 150ms ease-in-out;
+        &:focus{
+            outline: hsl(var(--ring)) solid 2px;
+            outline-offset: -1px;
+            border-color: hsl(var(--ring));
+        }
     }
+
+    .placeholder-title{
+        position: absolute;
+        --padding: .3em;
+        padding-inline: var(--padding);
+        left: calc(1.25em - var(--padding));
+        user-select: none;
+        pointer-events: none;
+        background-color: hsl(var(--card));
+        border-radius: var(--radius);
+        color: hsl(var(--card-foreground) / .3);
+        transition: color 150ms ease-in-out,
+         top 200ms ease-in-out,
+         transform 200ms ease-in-out,
+         padding-inline 200ms ease-in-out;
+    }
+    
+    input:focus + .placeholder-title, .placeholder-title.filled{
+        top: 0;
+        transform: translateY(-50%) scale(0.9);
+        padding-inline: .4em;
+    }
+
+    input:focus + .placeholder-title{
+        color: hsl(var(--ring));
+    }
+    
+
+    .show-password-btn{
+        cursor: pointer;
+        padding: .25em;
+        position: absolute;
+        right: 1.25em;
+        font-size: 1em;
+        background-color: transparent;
+        border: 0;
+        color: hsl(var(--card-foreground) / .3);
+        transition: color 150ms ease-in-out;
+        &:hover, .fi-br-eye-crossed{
+            color: hsl(var(--card-foreground));
+        }
+    }
+
+    //remove default hide password button
+    input[type="password"]::-webkit-credentials-auto-fill-button {
+        visibility: hidden;
+        display: none !important;
+      }
+      input[type="password"]::-ms-reveal {
+        display: none;
+      }
 }

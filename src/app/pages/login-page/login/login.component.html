@@ -1,7 +1,9 @@
 <app-login-register-layout
 pageTitle="Fazer login"
 [loginSocial]="true"
+secondaryButtonText="criar conta"
 (submit)="submit()"
+(secondaryButtonOnClick)="createAccount()"
 >
 
 <form [formGroup]="loginForm">

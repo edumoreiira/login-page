@@ -28,4 +28,8 @@ export class LoginComponent {
   submit(): void{
     console.log(this.loginForm.value)
   }
+
+  createAccount(): void{
+    console.log("works")
+  }
 }

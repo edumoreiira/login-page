@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef, input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
@@ -6,7 +7,7 @@ type InputTypes = "text" | "email" | "password" | "date";
 @Component({
   selector: 'app-form-input',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -21,7 +22,8 @@ type InputTypes = "text" | "email" | "password" | "date";
 
 export class FormInputComponent implements ControlValueAccessor {
   @Input() type: InputTypes = "text";
-  @Input() placeholder = "";
+  @Input() placeholder: string = "";
+  showPassword: boolean = false;
   value: string = "";
   onChange: any = () => {};
   onTouched: any = () => {};

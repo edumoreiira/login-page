@@ -1,5 +1,5 @@
 <main>
-    <section class="form-container drk">
+    <section class="form-container ark">
         <h1 class="logo">LOGO</h1>
 
         <div class="form-wrapper">
@@ -32,7 +32,7 @@
             <button (click)="submit()" class="primary-button" type="button">
                 <ng-content select="[primary-button]"></ng-content>
             </button>
-            <a class="secondary-button" href="">CRIAR CONTA</a>
+            <button type="text" class="secondary-button" href="" (click)="secondaryButtonOnClick.emit()">{{secondaryButtonText()}}</button>
         </div>
 
     </section>
