@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, input } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output, input } from '@angular/core';
+import { fadeInOut } from '../../animations/transition-animations';
 
 @Component({
   selector: 'app-login-register-layout',
@@ -7,6 +8,7 @@ import { Component, EventEmitter, Input, Output, input } from '@angular/core';
   imports: [CommonModule],
   templateUrl: './login-register-layout.component.html',
   styleUrl: './login-register-layout.component.scss',
+  animations: [fadeInOut]
 })
 export class LoginRegisterLayoutComponent {
   @Input() pageTitle: string = "";
@@ -15,6 +17,7 @@ export class LoginRegisterLayoutComponent {
   @Output("submit") onSubmit = new EventEmitter<string>();
   @Output() secondaryButtonOnClick = new EventEmitter<string>();
   keepLogin: boolean = false;
+  @HostBinding('@fadeInOut') routeAnimation = true;
 
   keepConnectionOption = input.required<boolean>();
   secondaryButtonText = input('', {

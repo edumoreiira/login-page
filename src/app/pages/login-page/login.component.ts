@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { LoginRegisterLayoutComponent } from '../../../components/login-register-layout/login-register-layout.component';
-import { FormInputComponent } from '../../../components/form-input/form-input.component';
+import { LoginRegisterLayoutComponent } from '../../components/login-register-layout/login-register-layout.component';
+import { FormInputComponent } from '../../components/form-input/form-input.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginForm} from '../../../models/login.interface';
-import { SocialLoginMethodsComponent } from '../../../components/social-login-methods/social-login-methods.component';
+import { LoginForm} from '../../models/login.interface';
+import { SocialLoginMethodsComponent } from '../../components/social-login-methods/social-login-methods.component';
 import { Router } from '@angular/router';
 
 @Component({

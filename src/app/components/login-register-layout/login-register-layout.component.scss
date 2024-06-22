@@ -116,6 +116,7 @@ main{
                 font-weight: 700;
                 font-size: .7em;
                 transition: color 150ms ease-in-out;
+                color: hsl(var(--card-foreground));
                 &:hover{
                     color: hsl(var(--card-foreground) / .8);
                 }
