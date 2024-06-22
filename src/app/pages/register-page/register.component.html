@@ -1,0 +1,77 @@
+<app-login-register-layout
+pageTitle="Crie sua conta"
+[loginSocial]="true"
+secondaryButtonText="Fazer login"
+[disablePrimaryButton]="!registerForm.valid"
+(submit)="submit()"
+(secondaryButtonOnClick)="navigateTo('login')"
+[keepConnectionOption]="false"
+>
+
+<form [formGroup]="registerForm">
+    <app-form-input
+    formControlName="name"
+    type="text"
+    placeholder="Nome"
+    >
+    </app-form-input>
+    <app-form-input
+    formControlName="username"
+    type="text"
+    placeholder="Nome de usuário"
+    >
+    </app-form-input>
+    <app-form-input
+    formControlName="dateBirth"
+    type="date"
+    placeholder="Data de nascimento"
+    >
+    </app-form-input>
+    <app-form-input
+    formControlName="email"
+    type="email"
+    placeholder="E-mail"
+    >
+    </app-form-input>
+    <app-form-input
+    formControlName="password"
+    type="password"
+    placeholder="Senha"
+    [hideShowPassword]="true"
+    >
+    </app-form-input>
+    <app-form-input
+    formControlName="passwordConfirm"
+    type="password"
+    placeholder="Confirmar senha"
+    [hideShowPassword]="true"
+    >
+    </app-form-input>
+</form>
+
+<!-- <ng-container login-social>
+
+<app-social-login-methods
+iconPath="/assets/social-icons/facebook.png"
+hslColor="214 90% 53%"
+maxHeight="40px"
+/>
+<app-social-login-methods
+iconPath="/assets/social-icons/google.png"
+hslColor="0 0% 92%"
+maxHeight="40px"
+/>
+<app-social-login-methods
+iconPath="/assets/social-icons/apple.png"
+hslColor="0 0% 0%"
+maxHeight="40px"
+/>
+
+</ng-container> -->
+
+
+<ng-container primary-button>
+    <i class="fi fi-rr-enter primary-button-icon"></i>
+</ng-container>
+
+</app-login-register-layout>

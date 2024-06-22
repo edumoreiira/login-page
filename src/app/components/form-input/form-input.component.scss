@@ -25,8 +25,10 @@
     .placeholder-title{
         position: absolute;
         --padding: .3em;
+        text-wrap: nowrap;
         padding-inline: var(--padding);
         left: calc(1.25em - var(--padding));
+        top: .75em;
         user-select: none;
         pointer-events: none;
         background-color: hsl(var(--card));

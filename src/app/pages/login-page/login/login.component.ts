@@ -4,6 +4,7 @@ import { FormInputComponent } from '../../../components/form-input/form-input.co
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginForm} from '../../../models/login.interface';
 import { SocialLoginMethodsComponent } from '../../../components/social-login-methods/social-login-methods.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,20 +17,20 @@ export class LoginComponent {
 
   loginForm!: FormGroup<LoginForm>;
 
-  constructor(){
-    
-    
+  constructor(private router: Router){
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required])
+      password: new FormControl('', [Validators.required, Validators.minLength(5)])
     })
   }
 
   submit(): void{
-    console.log(this.loginForm.value)
+    if(this.loginForm.valid){
+      
+    }
   }
 
-  createAccount(): void{
-    console.log("works")
+  navigateTo(route: string): void{
+    this.router.navigate([route]);
   }
 }

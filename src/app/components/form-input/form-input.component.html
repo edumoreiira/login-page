@@ -10,7 +10,7 @@
       >
      {{placeholder}}
      </span>
-     @if(type === "password"){
+     @if(!hideShowPassword() && type === "password"){
          <button class="show-password-btn" (click)="showPassword = !showPassword">
             @if(showPassword){
                 <i class="fi fi-br-eye-crossed"></i>

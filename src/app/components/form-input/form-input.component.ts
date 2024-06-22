@@ -23,6 +23,7 @@ type InputTypes = "text" | "email" | "password" | "date";
 export class FormInputComponent implements ControlValueAccessor {
   @Input() type: InputTypes = "text";
   @Input() placeholder: string = "";
+  hideShowPassword = input<boolean>(false);
   showPassword: boolean = false;
   value: string = "";
   onChange: any = () => {};

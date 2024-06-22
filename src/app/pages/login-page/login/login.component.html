@@ -2,8 +2,10 @@
 pageTitle="Fazer login"
 [loginSocial]="true"
 secondaryButtonText="criar conta"
+[disablePrimaryButton]="!loginForm.valid"
 (submit)="submit()"
-(secondaryButtonOnClick)="createAccount()"
+(secondaryButtonOnClick)="navigateTo('register')"
+[keepConnectionOption]="true"
 >
 
 <form [formGroup]="loginForm">

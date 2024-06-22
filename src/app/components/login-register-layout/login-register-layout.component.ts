@@ -11,15 +11,18 @@ import { Component, EventEmitter, Input, Output, input } from '@angular/core';
 export class LoginRegisterLayoutComponent {
   @Input() pageTitle: string = "";
   @Input() loginSocial: boolean = false;
+  @Input() disablePrimaryButton = false;
   @Output("submit") onSubmit = new EventEmitter<string>();
   @Output() secondaryButtonOnClick = new EventEmitter<string>();
+  keepLogin: boolean = false;
 
+  keepConnectionOption = input.required<boolean>();
   secondaryButtonText = input('', {
     transform: (value: string) => value.toUpperCase()
   });
+  
 
 
-  keepLogin: boolean = false;
 
 
 
