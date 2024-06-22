@@ -20,3 +20,10 @@ img{
 .fi{
     display: flex;
 }
+
+::view-transition-group(main-illustration),
+::view-transition-old(main-illustration),
+::view-transition-new(main-illustration){
+    height: auto;
+    width: auto;
+}

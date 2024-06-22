@@ -59,6 +59,7 @@ main{
                     background-color: transparent;
                     border-radius: 3px;
                     position: relative;
+                    transition: background-color 150ms ease-in-out;
                     &[aria-checked="true"]{
                         background-color: hsl(var(--primary));
                     }

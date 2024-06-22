@@ -17,7 +17,6 @@ export class LoginRegisterLayoutComponent {
   @Output("submit") onSubmit = new EventEmitter<string>();
   @Output() secondaryButtonOnClick = new EventEmitter<string>();
   keepLogin: boolean = false;
-  @HostBinding('@fadeInOut') routeAnimation = true;
 
   keepConnectionOption = input.required<boolean>();
   secondaryButtonText = input('', {
