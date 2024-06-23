@@ -30,6 +30,17 @@ main{
             flex-direction: column;
             gap: 1.5em;
             width: 100%;
+            .alert{
+                display: flex;
+                flex-direction: column;
+                padding: .8em 1em;
+                color: hsl(var(--destructive-foreground));
+                border-radius: var(--radius);
+                background-color: hsl(var(--destructive));
+                .alert__text{
+                    font-size: .8em;
+                }
+            }
         }
 
         .info-wrapper{
