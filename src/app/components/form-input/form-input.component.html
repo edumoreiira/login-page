@@ -3,7 +3,12 @@
     #input
     [value]="value"
     (input)="onInput($event)"
+    (blur)="inputElement.emit({
+        sourceElement: input,
+        formControlName: formControlName
+    })"
     [type]="showPassword ? 'text' : type"
+    [ngClass]="{'error': isInvalid}"
      />
      <span [ngClass]="{'filled':input.value.length > 0}"
       class="placeholder-title"
@@ -11,7 +16,7 @@
      {{placeholder}}
      </span>
      @if(!hideShowPassword() && type === "password"){
-         <button class="show-password-btn" (click)="showPassword = !showPassword">
+         <button type="button" class="show-password-btn" (click)="showPassword = !showPassword">
             @if(showPassword){
                 <i class="fi fi-br-eye-crossed"></i>
             }@else{
@@ -19,5 +24,6 @@
             }
         </button>
      }
+     <button type="submit" style="display: none;"></button>
 
 </div>

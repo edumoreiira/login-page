@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { RegisterForm } from '../../models/register.interface';
 import { LoginSignupService } from '../../services/login-signup.service';
 import { AlertService } from '../../services/alert.service';
+import { CheckInput } from '../../models/check-input.interface';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,15 @@ export class RegisterComponent {
   }
 
   submit(): void {
-    if (this.registerForm.valid) {
+    if (this.registerForm.valid){
+      if(this.registerForm.value.password !== this.registerForm.value.passwordConfirm){
+        this.alertService.emitAlert({
+          title: 'Senhas incompatíveis',
+          description: 'As senhas informadas são distintas',
+          color: 'red'
+        })
+        return;
+      }
       this.loginSignupService.signUp(
         this.registerForm.value.username,
         this.registerForm.value.password,
@@ -59,11 +68,21 @@ export class RegisterComponent {
         error: err => {
           this.alertService.emitAlert({
             title: 'Ocorreu um erro no registro.',
-            description: `${err.error}`,
+            description: `${typeof err.error == 'string' ? err.error : "Erro desconhecido"}`,
             color: 'red'
           });
         }
       })
+    }
+  }
+
+  isValidForm(eventData: CheckInput){
+    const isInvalid = this.registerForm.get(eventData.formControlName)?.invalid
+    const element = eventData.sourceElement;
+    if(isInvalid && element.value.length > 0){
+      element.classList.add("error");
+    }else{
+      element.classList.remove("error");
     }
   }
 

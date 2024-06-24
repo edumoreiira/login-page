@@ -42,7 +42,7 @@
         
         
         <div class="action-wrapper">
-            <button (click)="submit()" class="primary-button" type="button" [disabled]="disablePrimaryButton">
+            <button type="submit" (click)="submit()" class="primary-button" type="button" [disabled]="disablePrimaryButton">
                 <ng-content select="[primary-button]"></ng-content>
             </button>
             <button type="text" class="secondary-button" href="" (click)="secondaryButtonOnClick.emit()">{{secondaryButtonText()}}</button>

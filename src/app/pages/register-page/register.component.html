@@ -13,24 +13,28 @@ secondaryButtonText="Fazer login"
     formControlName="name"
     type="text"
     placeholder="Nome"
+    (inputElement)="isValidForm($event)"
     >
     </app-form-input>
     <app-form-input
     formControlName="username"
     type="text"
     placeholder="Nome de usuário"
+    (inputElement)="isValidForm($event)"
     >
     </app-form-input>
     <app-form-input
     formControlName="dateBirth"
     type="date"
     placeholder="Data de nascimento"
+    (inputElement)="isValidForm($event)"
     >
     </app-form-input>
     <app-form-input
     formControlName="email"
     type="email"
     placeholder="E-mail"
+    (inputElement)="isValidForm($event)"
     >
     </app-form-input>
     <app-form-input
@@ -38,6 +42,7 @@ secondaryButtonText="Fazer login"
     type="password"
     placeholder="Senha"
     [hideShowPassword]="true"
+    (inputElement)="isValidForm($event)"
     >
     </app-form-input>
     <app-form-input
@@ -45,6 +50,7 @@ secondaryButtonText="Fazer login"
     type="password"
     placeholder="Confirmar senha"
     [hideShowPassword]="true"
+    (inputElement)="isValidForm($event)"
     >
     </app-form-input>
 </form>

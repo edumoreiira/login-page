@@ -1,8 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, forwardRef, input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild, forwardRef, input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 
 type InputTypes = "text" | "email" | "password" | "date";
+
+interface CheckInput {
+  sourceElement: HTMLInputElement,
+  formControlName: string
+}
 
 @Component({
   selector: 'app-form-input',
@@ -20,16 +25,22 @@ type InputTypes = "text" | "email" | "password" | "date";
 })
 
 
-export class FormInputComponent implements ControlValueAccessor {
+export class FormInputComponent implements ControlValueAccessor{
   @Input() type: InputTypes = "text";
   @Input() placeholder: string = "";
+  @Input() formControlName: string = '';
+  @Input() isInvalid: boolean = false;
+  @Output() inputElement = new EventEmitter<CheckInput>;
+
+
   hideShowPassword = input<boolean>(false);
   showPassword: boolean = false;
   value: string = "";
+
   onChange: any = () => {};
   onTouched: any = () => {};
 
-
+  
   onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.onChange(value);

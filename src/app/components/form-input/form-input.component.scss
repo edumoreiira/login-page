@@ -20,6 +20,13 @@
             outline-offset: -1px;
             border-color: hsl(var(--ring));
         }
+        &.error{
+            outline: hsl(var(--destructive)) solid 2px;
+            &:focus{
+                border-color: transparent;
+                outline-offset: 0;
+            }
+        }
     }
 
     .placeholder-title{
@@ -48,6 +55,10 @@
 
     input:focus + .placeholder-title{
         color: hsl(var(--ring));
+    }
+
+    input.error + .placeholder-title{
+        color: hsl(var(--destructive));
     }
     
 
