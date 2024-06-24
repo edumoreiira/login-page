@@ -28,17 +28,22 @@ main{
         .form-wrapper{
             display: flex;
             flex-direction: column;
-            gap: 1.5em;
             width: 100%;
-            .alert{
-                display: flex;
-                flex-direction: column;
-                padding: .8em 1em;
-                color: hsl(var(--destructive-foreground));
-                border-radius: var(--radius);
-                background-color: hsl(var(--destructive));
-                .alert__text{
-                    font-size: .8em;
+            & > *:not(:last-child){
+                margin-bottom: 1.5em;
+            }
+            .alert--block{
+                min-height: 80px;
+                .alert{
+                    display: flex;
+                    flex-direction: column;
+                    padding: .8em 1em;
+                    color: hsl(var(--destructive-foreground));
+                    border-radius: var(--radius);
+                    .alert__text{
+                        font-size: .8em;
+                        overflow-wrap: break-word;
+                    }
                 }
             }
         }
@@ -47,6 +52,7 @@ main{
             display: flex;
             flex-direction: column;
             gap: 1em;
+            margin-top: 1.5em;
 
             .login-social{
                 display: grid;

@@ -4,14 +4,20 @@
 
         <div class="form-wrapper" style="view-transition-name: form-title;">
 
-            <div class="alert">
-                <h4 class="alert__title">Lorem, ipsum dolor.</h4>
-                <p class="alert__text">Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="alert--block">
+                @if(alertInfo.title){
+                    <div @popUp class="alert" [ngStyle]="{ 'background-color': alertInfo.color == 'red' ? 'hsl(var(--destructive))' : 'hsl(var(--successful))' }">
+                        <h4 class="alert__title">{{alertInfo.title}}</h4>
+                        <p class="alert__text">{{alertInfo.description}}</p>
+                    </div>
+                }
             </div>
+
             <h2>{{pageTitle}}</h2>
             <ng-content>
             </ng-content>
-            <div class="info-wrapper">
+
+            <div *ngIf="loginSocial || keepConnectionOption()" class="info-wrapper">
 
                 <div *ngIf="loginSocial" class="login-social">
                     <ng-content select="[login-social]"></ng-content>

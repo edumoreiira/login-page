@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, input } from '@angular/core';
-import { fadeInOut } from '../../animations/transition-animations';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, input } from '@angular/core';
+import { fadeInOut, popUp } from '../../animations/transition-animations';
+import { Alert } from '../../models/alert.interface';
+import { AlertService } from '../../services/alert.service';
 
-interface Alert {
-  title: string,
-  description: string
-}
 
 @Component({
   selector: 'app-login-register-layout',
@@ -13,9 +11,9 @@ interface Alert {
   imports: [CommonModule],
   templateUrl: './login-register-layout.component.html',
   styleUrl: './login-register-layout.component.scss',
-  animations: [fadeInOut]
+  animations: [fadeInOut, popUp]
 })
-export class LoginRegisterLayoutComponent implements OnChanges{
+export class LoginRegisterLayoutComponent implements OnInit {
   @Input() pageTitle: string = "";
   @Input() loginSocial: boolean = false;
   @Input() disablePrimaryButton = false;
@@ -26,20 +24,25 @@ export class LoginRegisterLayoutComponent implements OnChanges{
     transform: (value: string) => value.toUpperCase()
   });
   
-  alertInfo = input<Alert>({
-    title: '',
-    description: ''
-  });
-
+  alertInfo: Alert = {
+    title: 'Lorem, ipsum dolor.',
+    description: 'Lorem ipsum dolor sit amet consectetur.',
+    color: 'red'
+  };
   keepLogin: boolean = false;
-  alertTitle: string = "";
-  alertDescription: string = "";
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['alertInfo']){
-      this.alertTitle = this.alertInfo().title;
-      this.alertDescription = this.alertInfo().description;
-    }
+  constructor(
+    private alertService: AlertService
+  ){}
+
+  ngOnInit(): void {
+    this.alertService.currentAlert.subscribe({
+      next: alert => {
+        this.alertInfo.title = alert.title;
+        this.alertInfo.description = alert.description;
+        this.alertInfo.color = alert.color;
+      }
+    });
   }
   
   submit(){

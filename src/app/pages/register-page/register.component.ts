@@ -6,6 +6,7 @@ import { SocialLoginMethodsComponent } from '../../components/social-login-metho
 import { Router } from '@angular/router';
 import { RegisterForm } from '../../models/register.interface';
 import { LoginSignupService } from '../../services/login-signup.service';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-register',
@@ -21,9 +22,9 @@ export class RegisterComponent {
 
   constructor(
     private router: Router,
-    private loginSignupService: LoginSignupService
-
-  ){
+    private loginSignupService: LoginSignupService,
+    private alertService: AlertService
+  ) {
     this.registerForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -34,8 +35,8 @@ export class RegisterComponent {
     });
   }
 
-  submit(): void{
-    if(this.registerForm.valid){
+  submit(): void {
+    if (this.registerForm.valid) {
       this.loginSignupService.signUp(
         this.registerForm.value.username,
         this.registerForm.value.password,
@@ -43,13 +44,30 @@ export class RegisterComponent {
         this.registerForm.value.dateBirth,
         this.registerForm.value.email
       ).subscribe({
-        next: () => {console.log("Usuário criado com sucesso!")},
-        error: err => {console.error(err.error)}
+        next: () => {
+          this.navigateTo("login")
+
+          setTimeout(() => {
+            this.alertService.emitAlert({
+              title: 'Registro completo!',
+              description: 'Seu usuário foi cadastrado com sucesso!',
+              color: 'green'
+            });
+          }, 500);
+        },
+
+        error: err => {
+          this.alertService.emitAlert({
+            title: 'Ocorreu um erro no registro.',
+            description: `${err.error}`,
+            color: 'red'
+          });
+        }
       })
     }
   }
 
-  navigateTo(route: string): void{
+  navigateTo(route: string): void {
     this.router.navigate([route]);
   }
 }
