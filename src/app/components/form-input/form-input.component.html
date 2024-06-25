@@ -3,7 +3,7 @@
     #input
     [value]="value"
     (input)="onInput($event)"
-    (blur)="inputElement.emit({
+    (input)="inputElement.emit({
         sourceElement: input,
         formControlName: formControlName
     })"

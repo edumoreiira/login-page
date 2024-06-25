@@ -30,6 +30,14 @@ secondaryButtonText="Fazer login"
     (inputElement)="isValidForm($event)"
     >
     </app-form-input>
+    @if(registerForm.controls.dateBirth.invalid &&
+     registerForm.controls.dateBirth.touched || registerForm.controls.dateBirth.dirty){
+        
+        @if(registerForm.controls.dateBirth.errors?.['invalidDateFormat']){
+            <small>{{registerForm.controls.dateBirth.errors?.['invalidDateFormat']}}</small>
+        }
+    }
+    
     <app-form-input
     formControlName="email"
     type="email"

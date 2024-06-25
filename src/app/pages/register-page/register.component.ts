@@ -8,6 +8,7 @@ import { RegisterForm } from '../../models/register.interface';
 import { LoginSignupService } from '../../services/login-signup.service';
 import { AlertService } from '../../services/alert.service';
 import { CheckInput } from '../../models/check-input.interface';
+import { noSpaceAllowed, noSpecialCharacters, passwordMatch, requiredSpecialCharacters, validBornDate } from '../../validators/password-match.validator';
 
 @Component({
   selector: 'app-register',
@@ -27,25 +28,17 @@ export class RegisterComponent {
     private alertService: AlertService
   ) {
     this.registerForm = new FormGroup({
-      username: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      name: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required, noSpaceAllowed]),
+      name: new FormControl('', [Validators.required, noSpecialCharacters]),
+      dateBirth: new FormControl('', [Validators.required, Validators.pattern(''), validBornDate]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      dateBirth: new FormControl('', [Validators.required, Validators.pattern('')])
+      password: new FormControl('', [Validators.required, Validators.minLength(5), noSpaceAllowed, requiredSpecialCharacters]),
+      passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(5), passwordMatch])
     });
   }
 
   submit(): void {
     if (this.registerForm.valid){
-      if(this.registerForm.value.password !== this.registerForm.value.passwordConfirm){
-        this.alertService.emitAlert({
-          title: 'Senhas incompatíveis',
-          description: 'As senhas informadas são distintas',
-          color: 'red'
-        })
-        return;
-      }
       this.loginSignupService.signUp(
         this.registerForm.value.username,
         this.registerForm.value.password,
@@ -78,8 +71,10 @@ export class RegisterComponent {
 
   isValidForm(eventData: CheckInput){
     const isInvalid = this.registerForm.get(eventData.formControlName)?.invalid
+    const isTouched = this.registerForm.get(eventData.formControlName)?.touched
+    const isDirty = this.registerForm.get(eventData.formControlName)?.dirty
     const element = eventData.sourceElement;
-    if(isInvalid && element.value.length > 0){
+    if(isInvalid && !isTouched && isDirty){
       element.classList.add("error");
     }else{
       element.classList.remove("error");

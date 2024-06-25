@@ -22,6 +22,7 @@
         }
         &.error{
             outline: hsl(var(--destructive)) solid 2px;
+            border-color: transparent;
             &:focus{
                 border-color: transparent;
                 outline-offset: 0;
@@ -58,6 +59,10 @@
     }
 
     input.error + .placeholder-title{
+        color: hsl(var(--destructive) / .6);
+    }
+
+    input.error:focus + .placeholder-title, input.error + .placeholder-title.filled{
         color: hsl(var(--destructive));
     }
     
