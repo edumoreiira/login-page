@@ -8,7 +8,7 @@ import { RegisterForm } from '../../models/register.interface';
 import { LoginSignupService } from '../../services/login-signup.service';
 import { AlertService } from '../../services/alert.service';
 import { CheckInput } from '../../models/check-input.interface';
-import { noSpaceAllowed, noSpecialCharacters, passwordMatch, requiredSpecialCharacters, validBornDate } from '../../validators/password-match.validator';
+import { noSpaceAllowed, noSpecialCharacters, passwordMatch, requiredSpecialCharacters, validBornDate } from '../../validators/register-form.validators';
 
 @Component({
   selector: 'app-register',
