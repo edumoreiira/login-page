@@ -8,7 +8,8 @@ import { RegisterForm } from '../../models/register.interface';
 import { LoginSignupService } from '../../services/login-signup.service';
 import { AlertService } from '../../services/alert.service';
 import { CheckInput } from '../../models/check-input.interface';
-import { noSpaceAllowed, noSpecialCharacters, passwordMatch, requiredSpecialCharacters, validBornDate } from '../../validators/register-form.validators';
+import { noSpaceAllowed, noSpecialCharacters, passwordMismatch, requiredSpecialCharacters, validBornDate } from '../../validators/register-form.validators';
+import { fadeInOut } from '../../animations/transition-animations';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ import { noSpaceAllowed, noSpecialCharacters, passwordMatch, requiredSpecialChar
   imports: [LoginRegisterLayoutComponent, FormInputComponent, ReactiveFormsModule, SocialLoginMethodsComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
-  providers: [LoginSignupService]
+  providers: [LoginSignupService],
+  animations: [fadeInOut]
 })
 export class RegisterComponent {
 
@@ -28,12 +30,12 @@ export class RegisterComponent {
     private alertService: AlertService
   ) {
     this.registerForm = new FormGroup({
-      username: new FormControl('', [Validators.required, noSpaceAllowed]),
       name: new FormControl('', [Validators.required, noSpecialCharacters]),
+      username: new FormControl('', [Validators.required, noSpaceAllowed]),
       dateBirth: new FormControl('', [Validators.required, Validators.pattern(''), validBornDate]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(5), noSpaceAllowed, requiredSpecialCharacters]),
-      passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(5), passwordMatch])
+      passwordConfirm: new FormControl('', [Validators.required, passwordMismatch])
     });
   }
 

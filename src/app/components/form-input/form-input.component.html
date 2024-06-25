@@ -24,6 +24,9 @@
             }
         </button>
      }
-     <button type="submit" style="display: none;"></button>
-
+     @if(input.classList.contains("error")){
+         <div @fadeInOut class="invalid">
+            <ng-content></ng-content>
+         </div>
+     }
 </div>

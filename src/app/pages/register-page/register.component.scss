@@ -6,6 +6,13 @@
 form{
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 1.1em;
     font-size: .9em;
+}
+small{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translateY(calc(100% + .4em));
+    z-index: 1;
 }

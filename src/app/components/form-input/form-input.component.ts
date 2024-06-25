@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild, forwardRef, input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { CheckInput } from '../../models/check-input.interface';
+import { fadeInOut } from '../../animations/transition-animations';
 
 type InputTypes = "text" | "email" | "password" | "date";
 
-interface CheckInput {
-  sourceElement: HTMLInputElement,
-  formControlName: string
-}
 
 @Component({
   selector: 'app-form-input',
@@ -21,7 +19,8 @@ interface CheckInput {
     }
   ],
   templateUrl: './form-input.component.html',
-  styleUrl: './form-input.component.scss'
+  styleUrl: './form-input.component.scss',
+  animations: [fadeInOut]
 })
 
 

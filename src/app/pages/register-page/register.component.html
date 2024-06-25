@@ -15,28 +15,51 @@ secondaryButtonText="Fazer login"
     placeholder="Nome"
     (inputElement)="isValidForm($event)"
     >
+    @if(registerForm.controls.name.invalid &&
+    registerForm.controls.name.touched || registerForm.controls.name.dirty){
+       
+       @if(registerForm.controls.name.errors?.['required']){
+           <small @fadeInOut>Campo obrigatório</small>
+       } @else if(registerForm.controls.name.errors?.['noSpecialCharacters']){
+           <small @fadeInOut>Caracteres especiais não são permitidos</small>
+       }
+   }
     </app-form-input>
+
     <app-form-input
     formControlName="username"
     type="text"
     placeholder="Nome de usuário"
     (inputElement)="isValidForm($event)"
     >
+    @if(registerForm.controls.username.invalid &&
+     registerForm.controls.username.touched || registerForm.controls.username.dirty){
+        
+        @if(registerForm.controls.username.errors?.['required']){
+            <small @fadeInOut>Campo obrigatório</small>
+        } @else if(registerForm.controls.username.errors?.['noSpaceAllowed']){
+            <small @fadeInOut>Nome de usuário não pode conter espaço</small>
+        }
+    }
     </app-form-input>
+
     <app-form-input
     formControlName="dateBirth"
     type="date"
     placeholder="Data de nascimento"
     (inputElement)="isValidForm($event)"
     >
-    </app-form-input>
     @if(registerForm.controls.dateBirth.invalid &&
      registerForm.controls.dateBirth.touched || registerForm.controls.dateBirth.dirty){
         
-        @if(registerForm.controls.dateBirth.errors?.['invalidDateFormat']){
-            <small>{{registerForm.controls.dateBirth.errors?.['invalidDateFormat']}}</small>
+        @if(registerForm.controls.dateBirth.errors?.['required']){
+            <small @fadeInOut>Campo obrigatório</small>
+
+        }@else if (registerForm.controls.dateBirth.errors?.['invalidDateFormat']) {
+            <small @fadeInOut>{{registerForm.controls.dateBirth.errors?.['invalidDateFormat']}}</small>
         }
     }
+    </app-form-input>
     
     <app-form-input
     formControlName="email"
@@ -44,7 +67,17 @@ secondaryButtonText="Fazer login"
     placeholder="E-mail"
     (inputElement)="isValidForm($event)"
     >
+    @if(registerForm.controls.email.invalid &&
+    registerForm.controls.email.touched || registerForm.controls.email.dirty){
+       
+       @if(registerForm.controls.email.errors?.['required']){
+           <small @fadeInOut>Campo obrigatório</small>
+       } @else if(registerForm.controls.email.errors?.['email']){
+           <small @fadeInOut>Formato inválido</small>
+       }
+   }
     </app-form-input>
+
     <app-form-input
     formControlName="password"
     type="password"
@@ -52,7 +85,21 @@ secondaryButtonText="Fazer login"
     [hideShowPassword]="true"
     (inputElement)="isValidForm($event)"
     >
+    @if(registerForm.controls.password.invalid &&
+    registerForm.controls.password.touched || registerForm.controls.password.dirty){
+       
+       @if(registerForm.controls.password.errors?.['required']){
+           <small @fadeInOut>Campo obrigatório</small>
+       } @else if(registerForm.controls.password.errors?.['minlength']){
+           <small @fadeInOut>A senha deve conter no mínimo 5 caracteres</small>
+       } @else if(registerForm.controls.password.errors?.['noSpaceAllowed']){
+           <small @fadeInOut>A senha não pode conter espaços</small>
+       } @else if(registerForm.controls.password.errors?.['requiredSpecialCharacters']){
+           <small @fadeInOut>A senha deve conter no mínimo um caráctere especial: !&#64;#$%^&*</small>
+       }
+   }
     </app-form-input>
+    
     <app-form-input
     formControlName="passwordConfirm"
     type="password"
@@ -60,7 +107,18 @@ secondaryButtonText="Fazer login"
     [hideShowPassword]="true"
     (inputElement)="isValidForm($event)"
     >
+    @if(registerForm.controls.passwordConfirm.invalid &&
+    registerForm.controls.passwordConfirm.touched || registerForm.controls.passwordConfirm.dirty){
+       
+       @if(registerForm.controls.passwordConfirm.errors?.['required']){
+           <small @fadeInOut>Campo obrigatório</small>
+       } @else if(registerForm.controls.passwordConfirm.errors?.['passwordMismatch']){
+           <small @fadeInOut>Senhas diferentes</small>
+       }
+   }
     </app-form-input>
+
+    <button type="submit" style="display: none;"></button>
 </form>
 
 <!-- <ng-container login-social>

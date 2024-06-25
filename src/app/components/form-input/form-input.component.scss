@@ -1,6 +1,7 @@
 .input-wrapper{
     position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: .8em;
@@ -89,5 +90,14 @@
       }
       input[type="password"]::-ms-reveal {
         display: none;
+      }
+
+      .invalid{
+        width: 100%;
+        font-size: .8em;
+        font-weight: 600;
+        color: hsl(var(--destructive));
+        position: relative;
+        // bottom: -1.4em;
       }
 }
