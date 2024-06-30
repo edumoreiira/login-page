@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, input } from '@angular/core';
 import { fadeInOut, popUp } from '../../animations/transition-animations';
 import { Alert } from '../../models/alert.interface';
 import { AlertService } from '../../services/alert.service';
@@ -10,7 +10,7 @@ import { AlertService } from '../../services/alert.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './login-register-layout.component.html',
-  styleUrl: './login-register-layout.component.scss',
+  styleUrls: ['./login-register-layout.component.scss', './login-register-layout--large.component.scss'],
   animations: [fadeInOut, popUp]
 })
 export class LoginRegisterLayoutComponent implements OnInit {
@@ -19,7 +19,9 @@ export class LoginRegisterLayoutComponent implements OnInit {
   @Input() disablePrimaryButton = false;
   @Output("submit") onSubmit = new EventEmitter<string>();
   @Output() secondaryButtonOnClick = new EventEmitter<string>();
-  keepConnectionOption = input.required<boolean>();
+  @Input() largeContent: boolean = false;
+  @Input() disableAllButtons: boolean = false;
+  keepConnectionOption = input<boolean>();
   secondaryButtonText = input('', {
     transform: (value: string) => value.toUpperCase()
   });

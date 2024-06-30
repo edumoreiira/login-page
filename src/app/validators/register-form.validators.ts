@@ -13,6 +13,7 @@ export const passwordMismatch: ValidatorFn = (control: AbstractControl): Validat
         return { passwordMismatch: true }
     }
     return null;
+
 }
 
 export const noSpecialCharacters: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {

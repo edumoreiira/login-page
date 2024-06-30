@@ -1,4 +1,4 @@
-<main>
+<main [ngClass]="{'main--large': largeContent}">
     <section class="form-container ark">
         <h1 class="logo">LOGO</h1>
 
@@ -17,31 +17,33 @@
             <ng-content>
             </ng-content>
 
-            <div *ngIf="loginSocial || keepConnectionOption()" class="info-wrapper">
-
-                <div *ngIf="loginSocial" class="login-social">
-                    <ng-content select="[login-social]"></ng-content>
-                </div>
-
-                @if(keepConnectionOption()){
-                    <div class="keep-connection-wrapper">
-                        <button
-                            (click)="keepLogin = !keepLogin"
-                            role="checkbox"
-                            [attr.aria-checked]="keepLogin ? true : false"
-                            name="keep-connection" 
-                            id="keep-connection">
+            @if(!disableAllButtons){
+                <div *ngIf="loginSocial || keepConnectionOption()" class="info-wrapper">
     
-                            <span *ngIf="keepLogin" @fadeInOut><i class="fi fi-sr-check"></i></span>
-                        </button>
-                        <label for="keep-connection">Manter login</label>
+                    <div *ngIf="loginSocial" class="login-social">
+                        <ng-content select="[login-social]"></ng-content>
                     </div>
-                }
-            </div>
+    
+                    @if(keepConnectionOption()){
+                        <div class="keep-connection-wrapper">
+                            <button
+                                (click)="keepLogin = !keepLogin"
+                                role="checkbox"
+                                [attr.aria-checked]="keepLogin ? true : false"
+                                name="keep-connection" 
+                                id="keep-connection">
+        
+                                <span *ngIf="keepLogin" @fadeInOut><i class="fi fi-sr-check"></i></span>
+                            </button>
+                            <label for="keep-connection">Manter login</label>
+                        </div>
+                    }
+                </div>
+            }
         </div>
         
         
-        <div class="action-wrapper">
+        <div *ngIf="!disableAllButtons" class="action-wrapper">
             <button type="submit" (click)="submit()" class="primary-button" type="button" [disabled]="disablePrimaryButton">
                 <ng-content select="[primary-button]"></ng-content>
             </button>
@@ -51,6 +53,6 @@
     </section>
 
     <section class="content-container">
-        <img src="/assets/illustrations/zyra-wallpaper.jpg" alt="" class="illustration">
+        <img src="/assets/illustrations/ryze-wallpaper.jpg" alt="" class="illustration">
     </section>
 </main>

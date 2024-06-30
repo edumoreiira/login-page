@@ -1,0 +1,33 @@
+<app-login-register-layout
+pageTitle="Painel de controle dos usuários"
+[disableAllButtons]="true"
+[largeContent]="true"
+>
+<div class="registry-container">
+    <table class="registry">
+        <thead class="registry__header-body">
+            <tr class="registry__header-row">
+                <th class="registry__header-cell registry__header-cell--id">Registro</th>
+                <th class="registry__header-cell">Nome</th>
+                <th class="registry__header-cell">Data</th>
+                <th class="registry__header-cell">E-mail</th>
+                <th class="registry__header-cell">Username</th>
+                <th class="registry__header-cell">Senha</th>
+                <th class="registry__header-cell"></th>
+            </tr>
+        </thead>
+        <tbody class="registry__body">
+            <tr *ngFor="let user of users" class="registry__row">
+                <td class="registry__cell registry__cell--id">{{user.id}}</td>
+                <td class="registry__cell registry__cell--name">{{user.name}}</td>
+                <td class="registry__cell registry__cell--birthDate">{{user.birthDate}}</td>
+                <td class="registry__cell registry__cell--email">{{user.email}}</td>
+                <td class="registry__cell registry__cell--username">{{user.username}}</td>
+                <td class="registry__cell registry__cell--password">{{user.password}}</td>
+                <td class="registry__cell registry__cell--actions"><button type="button" class="registry__button">Editar</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</app-login-register-layout>

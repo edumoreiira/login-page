@@ -22,6 +22,6 @@ export class LoginSignupService {
 
   signIn(username: string, password: string){
     this.alertService.removeAlert();
-    return this.http.post(this.url + '/login', { username, password });
+    return this.http.post(this.url + '/login', { username: username, password: password });
   }
 }

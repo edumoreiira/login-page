@@ -1,0 +1,26 @@
+main.main--large{
+    section.form-container{
+        max-width: 1200px;
+        flex-basis: 170%;
+        min-width: 850px;
+        justify-content: start;
+    }
+}
+
+@media (max-width: 900px) {
+    main.main--large{
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+        section.form-container{
+            max-width: auto;
+            flex-basis: auto;
+            min-width: auto;
+        }
+        section.content-container{
+            max-height: 230px;
+            .illustration{
+                width: 100%;
+            }
+        }
+    }
+}

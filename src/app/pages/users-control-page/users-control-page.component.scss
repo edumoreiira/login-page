@@ -1,0 +1,30 @@
+.registry-container{
+    border-radius: var(--radius);
+    border: 1px solid hsl(var(--input));
+    max-height: 200px;
+    overflow: auto;
+    .registry{
+        font-size: .9em;
+        border-collapse: collapse;
+        display: block;
+        &__header-body{
+            position: sticky;
+            top: 0;
+            background-color: hsl(var(--card));
+            outline: 1px solid hsl(var(--input));
+        }
+        &__header-row, &__row{
+            height: 50px;
+        }
+        &__cell{
+            padding-inline: .5em;
+            border-bottom: 1px solid hsl(var(--input));
+            text-align: left;
+        }
+        &__header-cell{
+            font-weight: 500;
+            color: hsl(var(--muted-foreground));
+            text-wrap: nowrap;
+        }
+    }
+}
