@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginRegisterLayoutComponent } from '../../components/login-register-layout/login-register-layout.component';
-import { FormInputComponent } from '../../components/form-input/form-input.component';
+import { InputComponent } from '../../components/input/input.component';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SocialLoginMethodsComponent } from '../../components/social-login-methods/social-login-methods.component';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { fadeInOut } from '../../animations/transition-animations';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [LoginRegisterLayoutComponent, FormInputComponent, ReactiveFormsModule, SocialLoginMethodsComponent],
+  imports: [LoginRegisterLayoutComponent, InputComponent, ReactiveFormsModule, SocialLoginMethodsComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   providers: [LoginSignupService],

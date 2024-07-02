@@ -47,4 +47,8 @@ export class UsersControlPageComponent {
       password: "1231313"
     }
   ]
+  toggleShowPassword(event: Event){
+    const element = event.target as HTMLElement;
+    element.classList.toggle('registry__item--censored')
+  }
 }

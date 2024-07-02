@@ -3,28 +3,50 @@ pageTitle="Painel de controle dos usuários"
 [disableAllButtons]="true"
 [largeContent]="true"
 >
-<div class="registry-container">
-    <table class="registry">
+<div class="registry">
+    <div class="registry__config">
+        <div class="registry__search-bar">
+            
+        </div>
+        <div class="registry__options"></div>
+    </div>
+    <table class="registry__table">
         <thead class="registry__header-body">
             <tr class="registry__header-row">
                 <th class="registry__header-cell registry__header-cell--id">Registro</th>
-                <th class="registry__header-cell">Nome</th>
-                <th class="registry__header-cell">Data</th>
-                <th class="registry__header-cell">E-mail</th>
-                <th class="registry__header-cell">Username</th>
-                <th class="registry__header-cell">Senha</th>
-                <th class="registry__header-cell"></th>
+                <th class="registry__header-cell registry__header-cell--name">Nome</th>
+                <th class="registry__header-cell registry__header-cell--birthDate">Data</th>
+                <th class="registry__header-cell registry__header-cell--email">E-mail</th>
+                <th class="registry__header-cell registry__header-cell--username">Username</th>
+                <th class="registry__header-cell registry__header-cell--password">Senha</th>
+                <th class="registry__header-cell registry__header-cell--actions"></th>
             </tr>
         </thead>
         <tbody class="registry__body">
             <tr *ngFor="let user of users" class="registry__row">
-                <td class="registry__cell registry__cell--id">{{user.id}}</td>
-                <td class="registry__cell registry__cell--name">{{user.name}}</td>
-                <td class="registry__cell registry__cell--birthDate">{{user.birthDate}}</td>
-                <td class="registry__cell registry__cell--email">{{user.email}}</td>
-                <td class="registry__cell registry__cell--username">{{user.username}}</td>
-                <td class="registry__cell registry__cell--password">{{user.password}}</td>
-                <td class="registry__cell registry__cell--actions"><button type="button" class="registry__button">Editar</button></td>
+                <td class="registry__cell registry__cell--id" [title]="user.id">
+                    <span class="registry__item">{{user.id}}</span>
+                </td>
+                <td class="registry__cell registry__cell--name" [title]="user.name">
+                    <span class="registry__item">{{user.name}}</span>
+                </td>
+                <td class="registry__cell registry__cell--birthDate" [title]="user.birthDate">
+                    <span class="registry__item">{{user.birthDate}}</span>
+                </td>
+                <td class="registry__cell registry__cell--email" [title]="user.email">
+                    <span class="registry__item">{{user.email}}</span>
+                </td>
+                <td class="registry__cell registry__cell--username" [title]="user.username">
+                    <span class="registry__item">{{user.username}}</span>
+                </td>
+                <td class="registry__cell registry__cell--password" 
+                [title]="password.classList.contains('registry__item--censored') ? 'Censored' : user.password">
+                    <span #password class="registry__item registry__item--censored" 
+                    (click)="toggleShowPassword($event)">{{user.password}}</span>
+                </td>
+                <td class="registry__cell registry__cell--actions">
+                    <button type="button" class="registry__edit-button">Editar</button>
+                </td>
             </tr>
         </tbody>
     </table>
