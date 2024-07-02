@@ -4,7 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@a
 import { CheckInput } from '../../models/check-input.interface';
 import { fadeInOut } from '../../animations/transition-animations';
 
-type InputTypes = "text" | "email" | "password" | "date";
+type InputTypes = "text" | "email" | "password" | "date" | "search";
 
 
 @Component({

@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { LoginRegisterLayoutComponent } from '../../components/login-register-layout/login-register-layout.component';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/user.interface';
+import { InputComponent } from '../../components/input/input.component';
 
 @Component({
   selector: 'app-users-control-page',
   standalone: true,
-  imports: [LoginRegisterLayoutComponent, CommonModule],
+  imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent],
   templateUrl: './users-control-page.component.html',
   styleUrl: './users-control-page.component.scss'
 })

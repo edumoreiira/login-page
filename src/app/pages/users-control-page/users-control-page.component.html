@@ -6,10 +6,18 @@ pageTitle="Painel de controle dos usuários"
 <div class="registry">
     <div class="registry__config">
         <div class="registry__search-bar">
-            
+            <app-input
+            type="text"
+            placeholder="Pesquisar"
+            ></app-input>
         </div>
-        <div class="registry__options"></div>
+        <div class="registry__options">
+            <div class="registry__columns-control">
+                <button type="button" class="registry__columns-control__button">Colunas</button>
+            </div>
+        </div>
     </div>
+    <div class="registry__table__container">
     <table class="registry__table">
         <thead class="registry__header-body">
             <tr class="registry__header-row">
@@ -50,6 +58,7 @@ pageTitle="Painel de controle dos usuários"
             </tr>
         </tbody>
     </table>
+</div>
 </div>
 
 </app-login-register-layout>
