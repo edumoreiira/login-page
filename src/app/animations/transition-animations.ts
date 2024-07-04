@@ -34,3 +34,16 @@ export const slideUpDown = trigger('slideUpDown', [
         animate('250ms ease-in-out')
     ])
 ])
+
+export const slide = trigger('slide', [
+    state('void', style({
+        width: 0,
+        maxWidth: 0,
+        minWidth: 0,
+        padding: 0,
+        opacity: 0
+    })),
+    transition(':enter, :leave', [
+        animate('250ms ease-in-out')
+    ])
+])
