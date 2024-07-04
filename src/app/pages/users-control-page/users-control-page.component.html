@@ -13,7 +13,12 @@ pageTitle="Painel de controle dos usuários"
         </div>
         <div class="registry__options">
             <div class="registry__columns-control">
-                <button type="button" class="registry__columns-control__button">Colunas</button>
+                <app-dropdown-selection
+                name="Colunas"
+                [items]="tableColumns"
+                >
+
+                </app-dropdown-selection>
             </div>
         </div>
     </div>

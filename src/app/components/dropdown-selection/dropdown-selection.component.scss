@@ -1,0 +1,71 @@
+.dropdown {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    &__button {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid hsl(var(--input));
+        padding: .3em;
+        border-radius: var(--radius);
+        background-color: transparent;
+        font-size: 1em;
+        height: 100%;
+        width: 100%;
+    }
+
+    &__arrow-down {
+        border: solid hsl(var(--card-foreground));
+        border-width: 0 1px 1px 0;
+        display: inline-block;
+        padding: 3px;
+        box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+        margin-left: .5em;
+        transition: transform 250ms ease-in-out;
+    }
+
+    &__list{
+        position: absolute;
+        right: 0;
+        top: calc(100% + 5px);
+        min-width: 120%;
+        min-height: 100%;
+        padding: .4em;
+        list-style: none;
+        border: 1px solid hsl(var(--border));
+        border-radius: var(--radius);
+        background-color: hsl(var(--popover));
+        z-index: 1;
+        box-shadow: 0 5px 6px -2px rgba(0, 0, 0, 0.208);
+        overflow: hidden;
+    }
+
+    &__item{
+        cursor: pointer;
+        font-size: .92em;
+        border-radius: var(--radius);
+        padding-block: .5em;
+        padding-left: 2em;
+        position: relative;
+        transition: background-color 150ms ease-in-out;
+        &:hover{
+            background-color: hsl(var(--accent));
+        }
+
+        &--active::before{
+            content: "";
+            box-sizing: border-box;
+            position: absolute;
+            left: .5em;
+            width: 5px;
+            height: 8px;
+            border-width: 0 1px 1px 0;
+            border-style: solid;
+            transform-origin: bottom left;
+            transform: rotate(45deg)
+        }
+    }
+}

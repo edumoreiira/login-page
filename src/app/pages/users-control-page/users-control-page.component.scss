@@ -12,9 +12,17 @@
     &__search-bar{
         width: max(40%, 350px);
     }
+    
+    &__options{
+        display: flex;
+        max-width: 120px;
+        flex-grow: 1;
+    }
 
-
-
+    &__columns-control{
+        width: 100%;
+        font-size: .8em;
+    }
 
     // ----------------------- tables section ------------------
     &__table__container{

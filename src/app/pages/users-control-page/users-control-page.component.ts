@@ -3,13 +3,15 @@ import { LoginRegisterLayoutComponent } from '../../components/login-register-la
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/user.interface';
 import { InputComponent } from '../../components/input/input.component';
+import { DropdownSelectionComponent } from '../../components/dropdown-selection/dropdown-selection.component';
+import { DropdownListOptions } from '../../models/dropdown-list-options.interface';
 
 @Component({
   selector: 'app-users-control-page',
   standalone: true,
-  imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent],
+  imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent, DropdownSelectionComponent],
   templateUrl: './users-control-page.component.html',
-  styleUrl: './users-control-page.component.scss'
+  styleUrl: './users-control-page.component.scss',
 })
 
 
@@ -48,8 +50,18 @@ export class UsersControlPageComponent {
       password: "1231313"
     }
   ]
+
   toggleShowPassword(event: Event){
     const element = event.target as HTMLElement;
     element.classList.toggle('registry__item--censored')
   }
+
+  tableColumns: DropdownListOptions[] = [
+    { name: 'Registro', isActive: true },
+    { name: 'Nome', isActive: true },
+    { name: 'Data', isActive: true },
+    { name: 'E-mail', isActive: true },
+    { name: 'Username', isActive: true },
+    { name: 'Senha', isActive: true },
+  ]
 }

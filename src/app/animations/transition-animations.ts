@@ -23,3 +23,14 @@ export const popUp = trigger('popUp', [
         animate('200ms ease-in-out')
     ])
 ])
+
+export const slideUpDown = trigger('slideUpDown', [
+    state('void', style({
+        height: 0,
+        minHeight: 0,
+        opacity: 0
+    })),
+    transition(':enter, :leave', [
+        animate('250ms ease-in-out')
+    ])
+])

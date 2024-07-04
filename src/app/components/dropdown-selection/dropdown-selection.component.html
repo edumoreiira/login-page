@@ -1,0 +1,13 @@
+<div class="dropdown">
+    <button class="dropdown__button" type="button" 
+    (click)="dropdownOnClick($event)"
+    aria-expanded="false"
+    >{{name}}
+        <span class="dropdown__arrow-down" [ngStyle]="{'transform': isExpanded ? 'rotate(225deg)' : 'rotate(45deg)'}"></span>
+    </button>
+    <ul  *ngIf="isExpanded" class="dropdown__list" @slideUpDown>
+        @for(item of items; track $index){
+            <li [ngClass]="{'dropdown__item--active': item.isActive}" class="dropdown__item">{{item.name}}</li>
+        }
+    </ul>
+</div>
