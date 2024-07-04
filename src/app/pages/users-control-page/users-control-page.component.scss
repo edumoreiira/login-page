@@ -123,7 +123,6 @@
             color: transparent;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             position: relative;
-            z-index: -1;
             user-select: none;
         }
     }
@@ -138,6 +137,14 @@
         &:hover {
             text-decoration: underline;
         }
+    }
+
+    &__controllers{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 1em;
+        font-size: .7em;
     }
 
 }

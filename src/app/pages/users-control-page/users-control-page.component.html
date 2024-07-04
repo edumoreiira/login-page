@@ -24,60 +24,64 @@ pageTitle="Painel de controle dos usuários"
         </div>
     </div>
     <div class="registry__table__container">
-    <table class="registry__table">
-        <thead class="registry__header-body">
-            <tr class="registry__header-row">
-                @for(column of tableColumns; track $index){
+        <table class="registry__table">
+            <thead class="registry__header-body">
+                <tr class="registry__header-row">
+                    @for(column of tableColumns; track $index){
 
-                    @if(column.isActive){
-                        <th class="registry__header-cell registry__header-cell--id" @slide>{{column.name}}</th>
+                        @if(column.isActive){
+                            <th class="registry__header-cell registry__header-cell--id" @slide>{{column.name}}</th>
+                        }
                     }
-                }
-                <th class="registry__header-cell registry__header-cell--actions"></th>
-            </tr>
-        </thead>
-        <tbody class="registry__body">
-            <tr *ngFor="let user of users" class="registry__row">
-                @if (tableColumns[0].isActive) {
-                    <td class="registry__cell registry__cell--id" [title]="user.id" @slide>
-                        <span class="registry__item">{{user.id}}</span>
-                    </td>
-                }
-                @if (tableColumns[1].isActive) {
-                    <td class="registry__cell registry__cell--name" [title]="user.name" @slide>
-                        <span class="registry__item">{{user.name}}</span>
-                    </td>
-                }
-                @if (tableColumns[2].isActive) {
-                    <td class="registry__cell registry__cell--birthDate" [title]="user.birthDate" @slide>
-                        <span class="registry__item">{{user.birthDate}}</span>
-                    </td>
-                }
-                @if (tableColumns[3].isActive) {
-                    <td class="registry__cell registry__cell--email" [title]="user.email" @slide>
-                        <span class="registry__item">{{user.email}}</span>
-                    </td>
-                }
-                @if (tableColumns[4].isActive) {
+                    <th class="registry__header-cell registry__header-cell--actions"></th>
+                </tr>
+            </thead>
+            <tbody class="registry__body">
+                <tr *ngFor="let user of users" class="registry__row">
+                    @if (tableColumns[0].isActive) {
+                        <td class="registry__cell registry__cell--id" [title]="user.id" @slide>
+                            <span class="registry__item">{{user.id}}</span>
+                        </td>
+                    }
+                    @if (tableColumns[1].isActive) {
+                        <td class="registry__cell registry__cell--name" [title]="user.name" @slide>
+                            <span class="registry__item">{{user.name}}</span>
+                        </td>
+                    }
+                    @if (tableColumns[2].isActive) {
+                        <td class="registry__cell registry__cell--birthDate" [title]="user.birthDate" @slide>
+                            <span class="registry__item">{{user.birthDate}}</span>
+                        </td>
+                    }
+                    @if (tableColumns[3].isActive) {
+                        <td class="registry__cell registry__cell--email" [title]="user.email" @slide>
+                            <span class="registry__item">{{user.email}}</span>
+                        </td>
+                    }
+                    @if (tableColumns[4].isActive) {
 
-                    <td class="registry__cell registry__cell--username" [title]="user.username" @slide>
-                        <span class="registry__item">{{user.username}}</span>
+                        <td class="registry__cell registry__cell--username" [title]="user.username" @slide>
+                            <span class="registry__item">{{user.username}}</span>
+                        </td>
+                    }
+                    @if (tableColumns[5].isActive) {
+                        <td class="registry__cell registry__cell--password" 
+                        [title]="password.classList.contains('registry__item--censored') ? 'Censored' : user.password" @slide>
+                            <span #password class="registry__item registry__item--censored" 
+                            (click)="toggleShowPassword($event)">{{user.password}}</span>
+                        </td>
+                    }
+                    <td class="registry__cell registry__cell--actions">
+                        <button type="button" class="registry__edit-button">Editar</button>
                     </td>
-                }
-                @if (tableColumns[5].isActive) {
-                    <td class="registry__cell registry__cell--password" 
-                    [title]="password.classList.contains('registry__item--censored') ? 'Censored' : user.password" @slide>
-                        <span #password class="registry__item registry__item--censored" 
-                        (click)="toggleShowPassword($event)">{{user.password}}</span>
-                    </td>
-                }
-                <td class="registry__cell registry__cell--actions">
-                    <button type="button" class="registry__edit-button">Editar</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="registry__controllers">
+        <app-button name="Anterior" [isDisabled]="true"></app-button>
+        <app-button name="Próximo"></app-button>
+    </div>
 </div>
 
 </app-login-register-layout>

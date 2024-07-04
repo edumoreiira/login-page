@@ -6,11 +6,12 @@ import { InputComponent } from '../../components/input/input.component';
 import { DropdownSelectionComponent } from '../../components/dropdown-selection/dropdown-selection.component';
 import { DropdownListOptions } from '../../models/dropdown-list-options.interface';
 import { slide } from '../../animations/transition-animations';
+import { ButtonComponent } from '../../components/button/button.component';
 
 @Component({
   selector: 'app-users-control-page',
   standalone: true,
-  imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent, DropdownSelectionComponent],
+  imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent, DropdownSelectionComponent, ButtonComponent],
   templateUrl: './users-control-page.component.html',
   styleUrl: './users-control-page.component.scss',
   animations: [slide]

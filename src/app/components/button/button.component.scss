@@ -1,0 +1,23 @@
+.button{
+    font-size: 1em;
+    padding: .55em 1em;
+    border-radius: var(--radius);
+    font-weight: 500;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    border: 1px solid hsl(var(--input));
+    transition-property: background-color, color;
+    transition-duration: 150ms;
+    transition-timing-function: ease-in-out;
+    &:hover:not(:disabled){
+        cursor: pointer;
+        background-color: hsl(var(--accent));
+        color: hsl(var(--accent-foreground));
+    }
+    &:disabled{
+        background-color: hsl(var(--background));
+        border: 1px solid hsl(var(--input));
+        color: hsl(var(--foreground));
+        opacity: .5;
+    }
+}
