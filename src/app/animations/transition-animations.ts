@@ -41,7 +41,9 @@ export const slide = trigger('slide', [
         maxWidth: 0,
         minWidth: 0,
         padding: 0,
-        opacity: 0
+        opacity: 0,
+        transform: 'scale(0)'
+        
     })),
     transition(':enter, :leave', [
         animate('250ms ease-in-out')

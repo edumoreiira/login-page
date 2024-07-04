@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { DropdownListOptions } from '../../models/dropdown-list-options.interface';
-import { slideUpDown } from '../../animations/transition-animations';
+import { popUp, slideUpDown } from '../../animations/transition-animations';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { slideUpDown } from '../../animations/transition-animations';
   imports: [CommonModule],
   templateUrl: './dropdown-selection.component.html',
   styleUrl: './dropdown-selection.component.scss',
-  animations: [slideUpDown]
+  animations: [slideUpDown, popUp]
 })
 export class DropdownSelectionComponent {
   @Input() name: string = "Dropdown";

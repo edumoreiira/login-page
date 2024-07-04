@@ -21,7 +21,7 @@ export class UsersControlPageComponent {
   users: User[] = [
     {
       id: "25d87a77-2f16-4ff7-881e-f645c96fd53d",
-      name: "Edu15asdadaaaddddddddddddddddddddddd",
+      name: "Edu15",
       birthDate: "1990-05-15",
       email: "edu@gmail.com",
       username: "Bobos",
@@ -29,7 +29,7 @@ export class UsersControlPageComponent {
     },
     {
       id: "a173600a-cc1c-4993-ab98-c26f853c3ef1",
-      name: "Eduardoasdadaaaddddddddddddddddddddddd",
+      name: "Eduardo",
       birthDate: "2001-12-11",
       email: "edu@gmail.com",
       username: "jkky",
@@ -37,7 +37,55 @@ export class UsersControlPageComponent {
     },
     {
       id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
-      name: "Eduardoasdadaaaddddddddddddddddddddddd",
+      name: "Eduardo",
+      birthDate: "2001-12-11",
+      email: "edu@gmail.com",
+      username: "jkky1",
+      password: "Edu12345"
+    },
+    {
+      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
+      name: "Eduardo",
+      birthDate: "2001-12-11",
+      email: "edu@gmail.com",
+      username: "jkky1",
+      password: "Edu12345"
+    },
+    {
+      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
+      name: "Eduardo",
+      birthDate: "2001-12-11",
+      email: "edu@gmail.com",
+      username: "jkky1",
+      password: "Edu12345"
+    },
+    {
+      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
+      name: "Eduardo",
+      birthDate: "2001-12-11",
+      email: "edu@gmail.com",
+      username: "jkky1",
+      password: "Edu12345"
+    },
+    {
+      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
+      name: "Eduardo",
+      birthDate: "2001-12-11",
+      email: "edu@gmail.com",
+      username: "jkky1",
+      password: "Edu12345"
+    },
+    {
+      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
+      name: "Eduardo",
+      birthDate: "2001-12-11",
+      email: "edu@gmail.com",
+      username: "jkky1",
+      password: "Edu12345"
+    },
+    {
+      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
+      name: "Eduardo",
       birthDate: "2001-12-11",
       email: "edu@gmail.com",
       username: "jkky1",
@@ -45,7 +93,7 @@ export class UsersControlPageComponent {
     },
     {
       id: "aacfc785-6074-49e2-88df-fbb2c4b0ae40",
-      name: "456asdadaaaddddddddddddddddddddddd",
+      name: "456",
       birthDate: "1561-06-15",
       email: "a@a.com",
       username: "4564",
@@ -75,4 +123,6 @@ export class UsersControlPageComponent {
       table.isActive = !table.isActive;
     }
   }
+
+
 }
