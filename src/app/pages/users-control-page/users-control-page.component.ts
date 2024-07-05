@@ -45,54 +45,6 @@ export class UsersControlPageComponent {
       password: "Edu12345"
     },
     {
-      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
-      name: "Eduardo",
-      birthDate: "2001-12-11",
-      email: "edu@gmail.com",
-      username: "jkky1",
-      password: "Edu12345"
-    },
-    {
-      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
-      name: "Eduardo",
-      birthDate: "2001-12-11",
-      email: "edu@gmail.com",
-      username: "jkky1",
-      password: "Edu12345"
-    },
-    {
-      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
-      name: "Eduardo",
-      birthDate: "2001-12-11",
-      email: "edu@gmail.com",
-      username: "jkky1",
-      password: "Edu12345"
-    },
-    {
-      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
-      name: "Eduardo",
-      birthDate: "2001-12-11",
-      email: "edu@gmail.com",
-      username: "jkky1",
-      password: "Edu12345"
-    },
-    {
-      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
-      name: "Eduardo",
-      birthDate: "2001-12-11",
-      email: "edu@gmail.com",
-      username: "jkky1",
-      password: "Edu12345"
-    },
-    {
-      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
-      name: "Eduardo",
-      birthDate: "2001-12-11",
-      email: "edu@gmail.com",
-      username: "jkky1",
-      password: "Edu12345"
-    },
-    {
       id: "aacfc785-6074-49e2-88df-fbb2c4b0ae40",
       name: "456",
       birthDate: "1561-06-15",
@@ -102,11 +54,6 @@ export class UsersControlPageComponent {
     }
   ]
 
-  toggleShowPassword(event: Event){
-    const element = event.target as HTMLElement;
-    element.classList.toggle('registry__item--censored')
-  }
-
   tableColumns: DropdownListOptions[] = [
     { name: 'Registro', isActive: true },
     { name: 'Nome', isActive: true },
@@ -115,6 +62,35 @@ export class UsersControlPageComponent {
     { name: 'Username', isActive: true },
     { name: 'Senha', isActive: true },
   ]
+
+  rowsToEdit: User[] = [];
+
+  editRow(row: User, event: Event){
+    const editButton = event.target as HTMLButtonElement;
+
+
+
+
+
+    //retorna o index do array rowsToEdit caso o usuário já tenha sido selecionado, caso contrário retorna -1
+    const index = this.rowsToEdit.findIndex(user => user.id === row.id);
+
+    if(index !== -1){
+      this.rowsToEdit.splice(index, 1);
+      editButton.classList.remove('registry__edit-button--active');
+      
+    }else{
+      
+      this.rowsToEdit.push(row);
+      editButton.classList.add('registry__edit-button--active');
+    }
+  }
+
+  toggleShowPassword(event: Event){
+    const element = event.target as HTMLElement;
+    element.classList.toggle('registry__item--censored')
+  }
+
 
   changeTable(tableName: string){
     //percorre o array de tableColumns ate achar o primeiro elemento com nome passado em tableName

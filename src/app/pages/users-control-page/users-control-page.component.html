@@ -72,15 +72,20 @@ pageTitle="Painel de controle dos usuários"
                         </td>
                     }
                     <td class="registry__cell registry__cell--actions">
-                        <button type="button" class="registry__edit-button">Editar</button>
+                        <button type="button" class="registry__edit-button" (click)="editRow(user, $event)">Editar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="registry__controllers">
-        <app-button name="Anterior" [isDisabled]="true"></app-button>
-        <app-button name="Próximo"></app-button>
+        <div class="registry__panel-edit-button">
+            <app-button name="Painel de edição" [isDisabled]="rowsToEdit.length > 0 ? false : true"></app-button>
+        </div>
+        <div class="registry__paginator">
+            <app-button name="Anterior" [isDisabled]="true"></app-button>
+            <app-button name="Próximo"></app-button>
+        </div>
     </div>
 </div>
 

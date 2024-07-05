@@ -28,7 +28,7 @@
     &__table__container {
         border-radius: var(--radius);
         border: 1px solid hsl(var(--border));
-        max-height: 350px;
+        max-height: 300px;
         overflow: auto;
 
         &::-webkit-scrollbar {
@@ -116,7 +116,8 @@
         text-overflow: ellipsis;
         // padding: 10px;
         display: block;
-        transition: text-shadow 250ms ease-in-out;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0);
+        transition: text-shadow 400ms ease-in-out;
 
         &--censored {
             cursor: pointer;
@@ -133,18 +134,28 @@
         cursor: pointer;
         font-weight: 600;
         color: rgb(238, 179, 71);
-
+        transition: color 150ms ease-in-out;
         &:hover {
             text-decoration: underline;
+        }
+        &--active{
+            color: hsl(var(--muted-foreground));
+            text-decoration: underline;
+
         }
     }
 
     &__controllers{
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        gap: 1em;
+        justify-content: space-between;
+        gap: 1.5em;
         font-size: .7em;
     }
 
+    &__paginator{
+        display: flex;
+        align-items: center;
+        gap: 1em;
+    }
 }
