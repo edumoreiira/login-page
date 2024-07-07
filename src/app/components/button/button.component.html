@@ -1,3 +1,25 @@
-<button class="button"
-(click)="onClick.emit()"
-[attr.disabled]="isDisabled ? true : null">{{name}}</button>
+@switch (type) {
+    @case('transparent'){
+        <button class="button"
+        [ngClass]="{'button__expanded': isExpanded}"
+        (click)="onClick.emit()"
+        [attr.disabled]="isDisabled ? true : null">{{name}}
+        </button>
+    }
+
+    @case ('successful') {
+        <button class="button button__successful"
+        [ngClass]="{'button__expanded': isExpanded}"
+        (click)="onClick.emit()"
+        [attr.disabled]="isDisabled ? true : null">{{name}}
+        </button>
+    }
+
+    @case ('filled') {
+        <button class="button button__filled"
+        [ngClass]="{'button__expanded': isExpanded}"
+        (click)="onClick.emit()"
+        [attr.disabled]="isDisabled ? true : null">{{name}}
+        </button>
+    }
+}

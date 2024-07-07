@@ -4,6 +4,7 @@
 
         <div class="form-wrapper" style="view-transition-name: form-title;">
 
+            <!-- ALERT MESSAGE -->
             <div class="alert--block">
                 @if(alertInfo.title){
                     <div @popUp class="alert" [ngStyle]="{ 'background-color': alertInfo.color == 'red' ? 'hsl(var(--destructive))' : 'hsl(var(--successful))' }">
@@ -12,6 +13,7 @@
                     </div>
                 }
             </div>
+            <!-- ALERT MESSAGE -->
 
             <h2>{{pageTitle}}</h2>
             <ng-content>
@@ -53,6 +55,6 @@
     </section>
 
     <section class="content-container">
-        <img src="/assets/illustrations/ryze-wallpaper.jpg" alt="" class="illustration">
+        <img src="/assets/illustrations/castle.jpg" alt="" class="illustration">
     </section>
 </main>

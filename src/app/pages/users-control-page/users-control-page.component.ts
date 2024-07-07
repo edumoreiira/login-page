@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginRegisterLayoutComponent } from '../../components/login-register-layout/login-register-layout.component';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/user.interface';
 import { InputComponent } from '../../components/input/input.component';
 import { DropdownSelectionComponent } from '../../components/dropdown-selection/dropdown-selection.component';
 import { DropdownListOptions } from '../../models/dropdown-list-options.interface';
-import { slide } from '../../animations/transition-animations';
+import { fadeInOut, parentAnimations, popUp, slide } from '../../animations/transition-animations';
 import { ButtonComponent } from '../../components/button/button.component';
+import { LoginSignupService } from '../../services/login-signup.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-users-control-page',
@@ -14,46 +16,13 @@ import { ButtonComponent } from '../../components/button/button.component';
   imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent, DropdownSelectionComponent, ButtonComponent],
   templateUrl: './users-control-page.component.html',
   styleUrl: './users-control-page.component.scss',
-  animations: [slide]
+  animations: [slide, popUp, fadeInOut, parentAnimations]
 })
 
 
-export class UsersControlPageComponent {
-  users: User[] = [
-    {
-      id: "25d87a77-2f16-4ff7-881e-f645c96fd53d",
-      name: "Edu15",
-      birthDate: "1990-05-15",
-      email: "edu@gmail.com",
-      username: "Bobos",
-      password: "123456"
-    },
-    {
-      id: "a173600a-cc1c-4993-ab98-c26f853c3ef1",
-      name: "Eduardo",
-      birthDate: "2001-12-11",
-      email: "edu@gmail.com",
-      username: "jkky",
-      password: "Edu12345"
-    },
-    {
-      id: "14d40c47-ace4-47d7-929f-5fa00fa161dc",
-      name: "Eduardo",
-      birthDate: "2001-12-11",
-      email: "edu@gmail.com",
-      username: "jkky1",
-      password: "Edu12345"
-    },
-    {
-      id: "aacfc785-6074-49e2-88df-fbb2c4b0ae40",
-      name: "456",
-      birthDate: "1561-06-15",
-      email: "a@a.com",
-      username: "4564",
-      password: "1231313"
-    }
-  ]
-
+export class UsersControlPageComponent implements OnInit{
+  isEditorActive = false;
+  users$ = new Observable<User[]>();
   tableColumns: DropdownListOptions[] = [
     { name: 'Registro', isActive: true },
     { name: 'Nome', isActive: true },
@@ -62,27 +31,29 @@ export class UsersControlPageComponent {
     { name: 'Username', isActive: true },
     { name: 'Senha', isActive: true },
   ]
+  usersToEdit: User[] = [];
 
-  rowsToEdit: User[] = [];
-
-  editRow(row: User, event: Event){
+  constructor(private controlService: LoginSignupService){}
+  
+  ngOnInit(): void {
+      this.users$ = this.controlService.getAllUsers();
+  }  
+  addRowToEditList(row: User, event: Event){
     const editButton = event.target as HTMLButtonElement;
 
 
-
-
-
     //retorna o index do array rowsToEdit caso o usuário já tenha sido selecionado, caso contrário retorna -1
-    const index = this.rowsToEdit.findIndex(user => user.id === row.id);
+    const index = this.usersToEdit.findIndex(user => user.id === row.id);
 
     if(index !== -1){
-      this.rowsToEdit.splice(index, 1);
+      this.usersToEdit.splice(index, 1);
       editButton.classList.remove('registry__edit-button--active');
       
     }else{
-      
-      this.rowsToEdit.push(row);
+      row.edited = false;
+      this.usersToEdit.push(row);
       editButton.classList.add('registry__edit-button--active');
+      console.log(this.usersToEdit)
     }
   }
 

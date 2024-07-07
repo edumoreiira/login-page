@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
+import { animate, animateChild, group, query, state, style, transition, trigger } from "@angular/animations";
 
 export const fadeInOut = trigger('fadeInOut', [
     transition(':enter', [
@@ -49,3 +49,13 @@ export const slide = trigger('slide', [
         animate('250ms ease-in-out')
     ])
 ])
+
+export const parentAnimations = [
+    trigger('parentAnimation', [
+      transition(':leave', [
+        group([
+          query('@fadeInOut, @popUp, @slide', animateChild(), { optional: true }),
+        ])
+      ])
+    ])
+  ];

@@ -1,3 +1,6 @@
+:host(.full-width){
+    width: 100%;
+}
 .button{
     font-size: 1em;
     padding: .55em 1em;
@@ -19,5 +22,31 @@
         border: 1px solid hsl(var(--input));
         color: hsl(var(--foreground));
         opacity: .5;
+    }
+
+    &__successful{
+        background-color: hsl(var(--successful));
+        color: hsl(var(--destructive-foreground)) ;
+        border-color: transparent;
+        &:hover:not(:disabled){
+            cursor: pointer;
+            background-color: hsl(var(--successful) / .9);
+            color: hsl(var(--destructive-foreground));
+        }
+    }
+
+    &__filled{
+        background-color: hsl(var(--primary));
+        color: hsl(var(--primary-foreground)) ;
+        border-color: transparent;
+        &:hover:not(:disabled){
+            cursor: pointer;
+            background-color: hsl(var(--primary) / .95);
+            color: hsl(var(--primary-foreground));
+        }
+    }
+
+    &__expanded{
+        width: 100%;
     }
 }
