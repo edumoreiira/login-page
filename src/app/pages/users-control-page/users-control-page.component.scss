@@ -221,9 +221,10 @@
     }
     
     &__item--id{
+        display: block;
         color: hsl(var(--muted-foreground));
         font-weight: 500;
-        max-width: 100px;
+        min-width: 130px;
         text-wrap: wrap;
         font-size: .9em;
     }

@@ -72,7 +72,7 @@ pageTitle="Painel de controle dos usuários"
                         </td>
                     }
                     <td class="registry__cell registry__cell--actions">
-                        <button type="button" class="registry__edit-button" (click)="addRowToEditList(user, $event)">Editar</button>
+                        <button type="button" class="registry__edit-button" (click)="addRowToFormGroup(user, $event)">Editar</button>
                     </td>
                 </tr>
             </tbody>
@@ -100,61 +100,69 @@ pageTitle="Painel de controle dos usuários"
     <div class="editor__foreground" @popUp>
         <h1 class="editor__title">Editor de registro</h1>
         <div class="editor__table__container">
-            <table class="editor__table">
-                <thead class="editor__header-body">
-                    <tr class="editor__header-row">
+            <form [formGroup]="userForm">
+                <table class="editor__table">
+                    <thead class="editor__header-body">
+                        <tr class="editor__header-row">
 
-                        @for(column of tableColumns; track $index){
-                            <th class="editor__header-cell editor__header-cell--id">{{column.name}}</th>
-                        }
+                            @for(column of tableColumns; track $index){
+                                <th class="editor__header-cell editor__header-cell--id">{{column.name}}</th>
+                            }
 
-                        <th class="editor__header-cell editor__header-cell--actions"></th>
-                    </tr>
-                </thead>
-                <tbody class="editor__body">
-                    <tr *ngFor="let user of usersToEdit" class="editor__row">
+                            <th class="editor__header-cell editor__header-cell--actions"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="editor__body" formArrayName="user">
+                        <tr *ngFor="let user of users().controls; let i = index"
+                        [formGroupName]="i" class="editor__row">
+                            
+                            <!-- <td class="editor__cell editor__cell--id" [title]="user.id">
+                                <span class="editor__item--id">{{user.id}}</span>
+                            </td> -->
+                            
+                            <td class="editor__cell editor__cell--name" [title]="nameInput.value">
+                                <input  #nameInput [value]="'user.name'" type="text" class="editor__input"
+                                [ngClass]="{'editor__input--modified': nameInput.value !== 'user.name'}"
+                                formControlName="name">
+                            </td>
+                            
+                            <!-- <td class="editor__cell editor__cell--birthDate" [title]="user.birthDate">
+                                <input #birthDateInput [value]="user.birthDate" type="date" class="editor__input"
+                                [ngClass]="{'editor__input--modified' : birthDateInput.value !== user.birthDate}"
+                                formControlName="birthDate">
+                            </td>
+                            
+                            <td class="editor__cell editor__cell--email" [title]="emailInput.value">
+                                <input #emailInput [value]="user.email" type="text" class="editor__input"
+                                [ngClass]="{'editor__input--modified' : emailInput.value !== user.email}"
+                                formControlName="email">
+                            </td>
                         
-                        <td class="editor__cell editor__cell--id" [title]="user.id">
-                            <span class="editor__item--id">{{user.id}}</span>
-                        </td>
-                        
-                        <td class="editor__cell editor__cell--name" [title]="nameInput.value">
-                            <input #nameInput [value]="user.name" type="text" class="editor__input"
-                             [ngClass]="{'editor__input--modified': nameInput.value !== user.name}">
-                        </td>
-                        
-                        <td class="editor__cell editor__cell--birthDate" [title]="user.birthDate">
-                            <input #birthDateInput [value]="user.birthDate" type="date" class="editor__input"
-                             [ngClass]="{'editor__input--modified' : birthDateInput.value !== user.birthDate}">
-                        </td>
-                        
-                        <td class="editor__cell editor__cell--email" [title]="emailInput.value">
-                            <input #emailInput [value]="user.email" type="text" class="editor__input"
-                             [ngClass]="{'editor__input--modified' : emailInput.value !== user.email}">
-                        </td>
-                    
-                        <td class="editor__cell editor__cell--username" [title]="usernameInput.value">
-                            <input #usernameInput [value]="user.username" type="text" class="editor__input"
-                             [ngClass]="{'editor__input--modified' : usernameInput.value !== user.username}">
-                        </td>
-                        
+                            <td class="editor__cell editor__cell--username" [title]="usernameInput.value">
+                                <input #usernameInput [value]="user.username" type="text" class="editor__input"
+                                [ngClass]="{'editor__input--modified' : usernameInput.value !== user.username}"
+                                formControlName="username">
+                            </td>
+                            
 
-                        <td class="editor__cell editor__cell--password" [title]="passwordInput.value">
-                            <input #passwordInput [value]="user.password" type="text" class="editor__input"
-                             [ngClass]="{'editor__input--modified' : passwordInput.value !== user.password}">
-                        </td>
+                            <td class="editor__cell editor__cell--password" [title]="passwordInput.value">
+                                <input #passwordInput [value]="user.password" type="text" class="editor__input"
+                                [ngClass]="{'editor__input--modified' : passwordInput.value !== user.password}"
+                                formControlName="password">
+                            </td> -->
 
-                        <td class="editor__cell editor__cell--actions">
-                            <!-- <button type="button" class="editor__apply-button" (click)="addRowToEditList(user, $event)">Aplicar</button> -->
-                             <app-button
-                             name="Aplicar"
-                             type="filled"
-                             [isDisabled]="user.edited ? true : false"
-                             ></app-button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            <td class="editor__cell editor__cell--actions">
+                                <!-- <button type="button" class="editor__apply-button" (click)="addRowToEditList(user, $event)">Aplicar</button> -->
+                                <app-button
+                                name="Aplicar"
+                                type="filled"
+                                
+                                ></app-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
         <div class="editor__controllers">
             <app-button

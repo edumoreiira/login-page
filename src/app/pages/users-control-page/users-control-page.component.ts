@@ -9,11 +9,12 @@ import { fadeInOut, parentAnimations, popUp, slide } from '../../animations/tran
 import { ButtonComponent } from '../../components/button/button.component';
 import { LoginSignupService } from '../../services/login-signup.service';
 import { Observable } from 'rxjs';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-users-control-page',
   standalone: true,
-  imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent, DropdownSelectionComponent, ButtonComponent],
+  imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent, DropdownSelectionComponent, ButtonComponent, ReactiveFormsModule, FormsModule],
   templateUrl: './users-control-page.component.html',
   styleUrl: './users-control-page.component.scss',
   animations: [slide, popUp, fadeInOut, parentAnimations]
@@ -22,6 +23,7 @@ import { Observable } from 'rxjs';
 
 export class UsersControlPageComponent implements OnInit{
   isEditorActive = false;
+  userForm: FormGroup;
   users$ = new Observable<User[]>();
   tableColumns: DropdownListOptions[] = [
     { name: 'Registro', isActive: true },
@@ -33,12 +35,34 @@ export class UsersControlPageComponent implements OnInit{
   ]
   usersToEdit: User[] = [];
 
-  constructor(private controlService: LoginSignupService){}
-  
+  constructor(private controlService: LoginSignupService){
+
+    this.userForm = new FormGroup({
+      user: new FormArray([
+      ])
+    });
+    
+  }
+  users(): FormArray{
+    return this.userForm.get("user") as FormArray;
+  }
   ngOnInit(): void {
       this.users$ = this.controlService.getAllUsers();
-  }  
-  addRowToEditList(row: User, event: Event){
+  }
+
+  createUserForm(){
+    const formGroup = new FormGroup({
+      id: new FormControl('', [Validators.required]),
+      name: new FormControl(null, [Validators.required]),
+      birthDate: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(5)])
+    });
+
+    (this.userForm.get('user') as FormArray).push(formGroup);
+  }
+  addRowToFormGroup(row: User, event: Event){
     const editButton = event.target as HTMLButtonElement;
 
 
@@ -52,8 +76,8 @@ export class UsersControlPageComponent implements OnInit{
     }else{
       row.edited = false;
       this.usersToEdit.push(row);
+      this.createUserForm();
       editButton.classList.add('registry__edit-button--active');
-      console.log(this.usersToEdit)
     }
   }
 
