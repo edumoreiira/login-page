@@ -72,7 +72,7 @@ pageTitle="Painel de controle dos usuários"
                         </td>
                     }
                     <td class="registry__cell registry__cell--actions">
-                        <button type="button" class="registry__edit-button" (click)="addRowToFormGroup(user, $event)">Editar</button>
+                        <button type="button" class="registry__edit-button" (click)="controlRowsAndFormGroup(user, $event)">Editar</button>
                     </td>
                 </tr>
             </tbody>
@@ -82,7 +82,7 @@ pageTitle="Painel de controle dos usuários"
         <div class="registry__panel-edit-button">
             <app-button name="Painel de edição" 
             type="filled"
-            [isDisabled]="usersToEdit.length > 0 ? false : true"
+            [isDisabled]="userControl.length > 0 ? false : true"
             (onClick)="isEditorActive = true"></app-button>
         </div>
         <div class="registry__paginator">
@@ -113,50 +113,50 @@ pageTitle="Painel de controle dos usuários"
                         </tr>
                     </thead>
                     <tbody class="editor__body" formArrayName="user">
-                        <tr *ngFor="let user of users().controls; let i = index"
+                        <tr *ngFor="let user of usersForm().controls; let i = index"
                         [formGroupName]="i" class="editor__row">
                             
-                            <!-- <td class="editor__cell editor__cell--id" [title]="user.id">
-                                <span class="editor__item--id">{{user.id}}</span>
-                            </td> -->
+                            <td class="editor__cell editor__cell--id" [title]="user.value.id">
+                                <span class="editor__item--id">{{user.value.id}}</span>
+                            </td>
                             
-                            <td class="editor__cell editor__cell--name" [title]="nameInput.value">
-                                <input  #nameInput [value]="'user.name'" type="text" class="editor__input"
-                                [ngClass]="{'editor__input--modified': nameInput.value !== 'user.name'}"
+                            <td class="editor__cell editor__cell--name" [title]="user.value.name">
+                                <input type="text" class="editor__input"
+                                [ngClass]="{'editor__input--modified': user.value.name !== userControl[i].name}"
                                 formControlName="name">
                             </td>
                             
-                            <!-- <td class="editor__cell editor__cell--birthDate" [title]="user.birthDate">
-                                <input #birthDateInput [value]="user.birthDate" type="date" class="editor__input"
-                                [ngClass]="{'editor__input--modified' : birthDateInput.value !== user.birthDate}"
+                            <td class="editor__cell editor__cell--birthDate" [title]="user.value.birthDate">
+                                <input type="date" class="editor__input"
+                                [ngClass]="{'editor__input--modified' : user.value.birthDate !== userControl[i].birthDate}"
                                 formControlName="birthDate">
                             </td>
                             
-                            <td class="editor__cell editor__cell--email" [title]="emailInput.value">
-                                <input #emailInput [value]="user.email" type="text" class="editor__input"
-                                [ngClass]="{'editor__input--modified' : emailInput.value !== user.email}"
+                            <td class="editor__cell editor__cell--email" [title]="user.value.email">
+                                <input type="text" class="editor__input"
+                                [ngClass]="{'editor__input--modified' : user.value.email !== userControl[i].email}"
                                 formControlName="email">
                             </td>
                         
-                            <td class="editor__cell editor__cell--username" [title]="usernameInput.value">
-                                <input #usernameInput [value]="user.username" type="text" class="editor__input"
-                                [ngClass]="{'editor__input--modified' : usernameInput.value !== user.username}"
+                            <td class="editor__cell editor__cell--username" [title]="user.value.username">
+                                <input type="text" class="editor__input"
+                                [ngClass]="{'editor__input--modified' : user.value.username !== userControl[i].username}"
                                 formControlName="username">
                             </td>
                             
 
-                            <td class="editor__cell editor__cell--password" [title]="passwordInput.value">
-                                <input #passwordInput [value]="user.password" type="text" class="editor__input"
-                                [ngClass]="{'editor__input--modified' : passwordInput.value !== user.password}"
+                            <td class="editor__cell editor__cell--password" [title]="user.value.password">
+                                <input type="text" class="editor__input"
+                                [ngClass]="{'editor__input--modified' : user.value.password !== userControl[i].password}"
                                 formControlName="password">
-                            </td> -->
+                            </td>
 
                             <td class="editor__cell editor__cell--actions">
                                 <!-- <button type="button" class="editor__apply-button" (click)="addRowToEditList(user, $event)">Aplicar</button> -->
                                 <app-button
                                 name="Aplicar"
                                 type="filled"
-                                
+                                [isDisabled]="!isFormChanged(userControl[i], user) || user.invalid"
                                 ></app-button>
                             </td>
                         </tr>
@@ -169,6 +169,7 @@ pageTitle="Painel de controle dos usuários"
             name="Aplicar todos"
             type="filled"
             [isExpanded]="true"
+            [isDisabled]="isAllFormChanged() || userForm.invalid"
             ></app-button>
         </div>
     </div>

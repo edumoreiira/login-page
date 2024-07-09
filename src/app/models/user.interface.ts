@@ -10,4 +10,11 @@ export interface User {
     edited?: boolean
 }
 
-
+export interface UserForm{
+    id: FormControl,
+    username: FormControl,
+    password: FormControl,
+    birthDate: FormControl,
+    name: FormControl,
+    email: FormControl,
+}
