@@ -117,7 +117,12 @@ pageTitle="Painel de controle dos usuários"
                     </thead>
                     <tbody class="editor__body" formArrayName="user">
                         <tr *ngFor="let user of getAllUsersForm().controls; let i = index"
-                        [formGroupName]="i" class="editor__row">
+                        [formGroupName]="i" class="editor__row" 
+                        [ngClass]="{
+                            'editor__row--edited': userStatus(i) === 'edited',
+                            'editor__row--error': userStatus(i) === 'error'
+                        }">
+                        
                             <td class="editor__cell editor__cell--delete">
                                 <i class="fi fi-rr-circle-xmark editor__cell--delete--icon"></i>
                             </td>
@@ -156,14 +161,20 @@ pageTitle="Painel de controle dos usuários"
                                 formControlName="password"> 
                             </td>
 
-                            <td class="editor__cell editor__cell--actions">
-                                <!-- <button type="button" class="editor__apply-button" (click)="addRowToEditList(user, $event)">Aplicar</button> -->
+                            <td class="editor__cell editor__cell--actions" [ngClass]="{
+                                'editor__cell--edited': userStatus(i) === 'edited',
+                                'editor__cell--error': userStatus(i) === 'error'
+                            }">
                                 <app-button
-                                [name]="userControl[i].status === 'edited' ? 'Ok' : 'Aplicar'"
+                                [name]="userStatus(i) === 'edited' ? 'Ok' : 
+                                userStatus(i) === 'error' ? 'Aplicar' :
+                                'Aplicar'"
                                 type="filled"
                                 minWidth="70px"
-                                [isDisabled]="userControl[i].status === 'edited' ? false : !isFormChanged(userControl[i], user) || user.invalid"
-                                [status]="userControl[i].status === 'edited' ? 'ok' : 'default'"
+                                [isDisabled]="userStatus(i) === 'edited' ? false : (!isFormChanged(userControl[i], user) || user.invalid)"
+                                [status]="userStatus(i) === 'edited' ? 'ok' :
+                                userStatus(i) === 'error' ? 'error' :
+                                'default'"
                                 (onClick)="editUser(user, !user.invalid, user.value.id, user.value.name,
                                  user.value.birthDate, user.value.email,user.value.username, user.value.password)"
                                 ></app-button>

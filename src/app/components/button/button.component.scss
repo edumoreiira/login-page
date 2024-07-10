@@ -37,7 +37,7 @@
 
     &__filled{
         background-color: hsl(var(--primary));
-        color: hsl(var(--destructive-foreground)) ;
+        color: hsl(var(--primary-foreground));
         border-color: transparent;
         &:hover:not(:disabled){
             cursor: pointer;
@@ -47,12 +47,24 @@
 
         &--ok{
             background-color: hsl(var(--successful));
+            color: hsl(var(--destructive-foreground));
             &:hover:not(:disabled){
                 cursor: default;
                 background-color: hsl(var(--successful));
                 color: hsl(var(--destructive-foreground));
             }
         }
+
+        &--error{
+            background-color: hsl(var(--destructive));
+            color: hsl(var(--destructive-foreground));
+            &:hover:not(:disabled){
+                background-color: hsl(var(--destructive) / .9);
+                color: hsl(var(--destructive-foreground));
+            }
+        }
+
+        
     }
 
     &__expanded{

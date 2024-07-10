@@ -11,6 +11,7 @@ import { LoginSignupService } from '../../services/login-signup.service';
 import { Observable, shareReplay } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
+type UserStatus = 'edited' | 'error' | 'unchanged';
 @Component({
   selector: 'app-users-control-page',
   standalone: true,
@@ -167,6 +168,15 @@ export class UsersControlPageComponent implements OnInit{
     })
 
     return result;
+  }
+
+  userStatus(index: number): UserStatus{
+    if(this.userControl[index].status === 'edited'){
+      return 'edited'
+    }else if(this.userControl[index].status === 'error'){
+      return 'error'
+    }
+    return 'unchanged'
   }
 
   closeEditor(){

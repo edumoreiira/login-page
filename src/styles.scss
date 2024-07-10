@@ -21,6 +21,31 @@ img{
     display: flex;
 }
 
+input[type="date"]{
+    position: relative;
+    display: inline-bock;
+    &::-webkit-calendar-picker-indicator{
+        // background-image: url('/');
+        mask-image: url('/assets/icons/calendar-day.svg');
+        mask-size: 80%;
+        mask-position: center;
+        mask-repeat: no-repeat;
+        background-color: hsl(var(--foreground));
+
+        // right: 1.5em;
+    }
+    // &::after{
+    //     content: '\f073'; /* Código unicode do ícone de calendário do Font Awesome */
+    //     font-family: 'Font Awesome 5 Free';
+    //     font-weight: 900;
+    //     position: absolute;
+    //     // right: 0;
+    //     top: 50%;
+    //     transform: translateY(-50%);
+    //     pointer-events: none;
+    // }
+}
+
 ::view-transition-group(main-illustration),
 ::view-transition-old(main-illustration),
 ::view-transition-new(main-illustration){

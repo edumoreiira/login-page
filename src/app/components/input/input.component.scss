@@ -34,6 +34,7 @@
     .placeholder-title{
         position: absolute;
         --padding: .3em;
+        padding-bottom: .3em;
         text-wrap: nowrap;
         padding-inline: var(--padding);
         left: calc(1.25em - var(--padding));
@@ -87,17 +88,17 @@
     input[type="password"]::-webkit-credentials-auto-fill-button {
         visibility: hidden;
         display: none !important;
-      }
+    }
       input[type="password"]::-ms-reveal {
         display: none;
-      }
+    }
 
-      .invalid{
+    .invalid{
         width: 100%;
         font-size: .8em;
         font-weight: 600;
         color: hsl(var(--destructive));
         position: relative;
         // bottom: -1.4em;
-      }
+    }
 }
