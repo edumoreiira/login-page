@@ -37,7 +37,7 @@ pageTitle="Painel de controle dos usuários"
                 </tr>
             </thead>
             <tbody class="registry__body">
-                <tr *ngFor="let user of users$ | async" class="registry__row">
+                <tr *ngFor="let user of users$ | async" class="registry__row" @fadeInOut>
                     @if (tableColumns[0].isActive) {
                         <td class="registry__cell registry__cell--id" [title]="user.id" @slide>
                             <span class="registry__item">{{user.id}}</span>
@@ -72,7 +72,9 @@ pageTitle="Painel de controle dos usuários"
                         </td>
                     }
                     <td class="registry__cell registry__cell--actions">
-                        <button type="button" class="registry__edit-button" (click)="controlRowsAndFormGroup(user, $event)">Editar</button>
+                        <button type="button" class="registry__edit-button" 
+                        [ngClass]="{'registry__edit-button--active': isUserOnRegisterList(user)}"
+                        (click)="controlRowsAndFormGroup(user)">Editar</button>
                     </td>
                 </tr>
             </tbody>
@@ -83,7 +85,7 @@ pageTitle="Painel de controle dos usuários"
             <app-button name="Painel de edição" 
             type="filled"
             [isDisabled]="userControl.length > 0 ? false : true"
-            (onClick)="isEditorActive = true"></app-button>
+            (onClick)="openEditor()"></app-button>
         </div>
         <div class="registry__paginator">
             <app-button name="Anterior" [isDisabled]="true"></app-button>
@@ -96,7 +98,7 @@ pageTitle="Painel de controle dos usuários"
 
 
 <section *ngIf="isEditorActive" class="editor" @parentAnimation>
-    <div class="editor__background" (click)="isEditorActive = false" @fadeInOut></div>
+    <div class="editor__background" (click)="closeEditor()" @fadeInOut></div>
     <div class="editor__foreground" @popUp>
         <h1 class="editor__title">Editor de registro</h1>
         <div class="editor__table__container">
@@ -105,17 +107,20 @@ pageTitle="Painel de controle dos usuários"
                     <thead class="editor__header-body">
                         <tr class="editor__header-row">
 
+                            <th class="editor__header-cell"></th>
                             @for(column of tableColumns; track $index){
                                 <th class="editor__header-cell editor__header-cell--id">{{column.name}}</th>
                             }
-
                             <th class="editor__header-cell editor__header-cell--actions"></th>
                         </tr>
+
                     </thead>
                     <tbody class="editor__body" formArrayName="user">
-                        <tr *ngFor="let user of usersForm().controls; let i = index"
+                        <tr *ngFor="let user of getAllUsersForm().controls; let i = index"
                         [formGroupName]="i" class="editor__row">
-                            
+                            <td class="editor__cell editor__cell--delete">
+                                <i class="fi fi-rr-circle-xmark editor__cell--delete--icon"></i>
+                            </td>
                             <td class="editor__cell editor__cell--id" [title]="user.value.id">
                                 <span class="editor__item--id">{{user.value.id}}</span>
                             </td>
@@ -123,40 +128,44 @@ pageTitle="Painel de controle dos usuários"
                             <td class="editor__cell editor__cell--name" [title]="user.value.name">
                                 <input type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified': user.value.name !== userControl[i].name}"
-                                formControlName="name">
+                                formControlName="name"> 
                             </td>
                             
                             <td class="editor__cell editor__cell--birthDate" [title]="user.value.birthDate">
                                 <input type="date" class="editor__input"
                                 [ngClass]="{'editor__input--modified' : user.value.birthDate !== userControl[i].birthDate}"
-                                formControlName="birthDate">
+                                formControlName="birthDate"> 
                             </td>
                             
                             <td class="editor__cell editor__cell--email" [title]="user.value.email">
                                 <input type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified' : user.value.email !== userControl[i].email}"
-                                formControlName="email">
+                                formControlName="email"> 
                             </td>
                         
                             <td class="editor__cell editor__cell--username" [title]="user.value.username">
                                 <input type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified' : user.value.username !== userControl[i].username}"
-                                formControlName="username">
+                                formControlName="username"> 
                             </td>
                             
 
                             <td class="editor__cell editor__cell--password" [title]="user.value.password">
                                 <input type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified' : user.value.password !== userControl[i].password}"
-                                formControlName="password">
+                                formControlName="password"> 
                             </td>
 
                             <td class="editor__cell editor__cell--actions">
                                 <!-- <button type="button" class="editor__apply-button" (click)="addRowToEditList(user, $event)">Aplicar</button> -->
                                 <app-button
-                                name="Aplicar"
+                                [name]="userControl[i].status === 'edited' ? 'Ok' : 'Aplicar'"
                                 type="filled"
-                                [isDisabled]="!isFormChanged(userControl[i], user) || user.invalid"
+                                minWidth="70px"
+                                [isDisabled]="userControl[i].status === 'edited' ? false : !isFormChanged(userControl[i], user) || user.invalid"
+                                [status]="userControl[i].status === 'edited' ? 'ok' : 'default'"
+                                (onClick)="editUser(user, !user.invalid, user.value.id, user.value.name,
+                                 user.value.birthDate, user.value.email,user.value.username, user.value.password)"
                                 ></app-button>
                             </td>
                         </tr>
@@ -170,6 +179,7 @@ pageTitle="Painel de controle dos usuários"
             type="filled"
             [isExpanded]="true"
             [isDisabled]="isAllFormChanged() || userForm.invalid"
+            (onClick)="editAllUsers(!userForm.invalid)"
             ></app-button>
         </div>
     </div>

@@ -1,6 +1,7 @@
 @switch (type) {
     @case('transparent'){
         <button class="button"
+        [ngStyle]="{'min-width': minWidth}"
         [ngClass]="{'button__expanded': isExpanded}"
         (click)="onClick.emit()"
         [attr.disabled]="isDisabled ? true : null">{{name}}
@@ -9,6 +10,7 @@
 
     @case ('successful') {
         <button class="button button__successful"
+        [ngStyle]="{'min-width': minWidth}"
         [ngClass]="{'button__expanded': isExpanded}"
         (click)="onClick.emit()"
         [attr.disabled]="isDisabled ? true : null">{{name}}
@@ -17,7 +19,12 @@
 
     @case ('filled') {
         <button class="button button__filled"
-        [ngClass]="{'button__expanded': isExpanded}"
+        [ngStyle]="{'min-width': minWidth}"
+        [ngClass]="{'
+        button__expanded': isExpanded,
+        'button__filled--ok': status === 'ok',
+        'button__filled--error': status === 'error',
+        }"
         (click)="onClick.emit()"
         [attr.disabled]="isDisabled ? true : null">{{name}}
         </button>

@@ -7,7 +7,8 @@ export interface User {
     email: string,
     username: string,
     password: string,
-    edited?: boolean
+    status?:  'unchanged' | 'edited' | 'error';
+    addedToEdit?: boolean;
 }
 
 export interface UserForm{

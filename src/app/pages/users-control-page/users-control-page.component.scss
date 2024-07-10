@@ -228,4 +228,16 @@
         text-wrap: wrap;
         font-size: .9em;
     }
+
+    &__cell--delete{
+        font-size: 1.5em;
+
+        &--icon{
+            transition: color 150ms ease-in-out;
+            cursor: pointer;
+            &:hover{
+                color: hsl(var(--destructive));
+            }
+        }
+    }
 }

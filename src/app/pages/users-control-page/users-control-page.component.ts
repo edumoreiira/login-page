@@ -8,7 +8,7 @@ import { DropdownListOptions } from '../../models/dropdown-list-options.interfac
 import { fadeInOut, parentAnimations, popUp, slide } from '../../animations/transition-animations';
 import { ButtonComponent } from '../../components/button/button.component';
 import { LoginSignupService } from '../../services/login-signup.service';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -22,8 +22,8 @@ import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, Reacti
 
 
 export class UsersControlPageComponent implements OnInit{
-  isAllFormsChanged: boolean = false;
-  isEditorActive = false;
+  usersHasChanged: boolean = false;
+  isEditorActive: boolean = false;
   userForm: FormGroup;
   users$ = new Observable<User[]>();
   tableColumns: DropdownListOptions[] = [
@@ -45,7 +45,7 @@ export class UsersControlPageComponent implements OnInit{
     
   }
   ngOnInit(): void {
-    this.users$ = this.controlService.getAllUsers();
+    this.getAllUsers();
   }
   
   createUserForm(id: string, name: string, birthDate: string, email: string, username: string, password: string){
@@ -55,39 +55,78 @@ export class UsersControlPageComponent implements OnInit{
       birthDate: new FormControl(birthDate, [Validators.required]),
       email: new FormControl(email, [Validators.required]),
       username: new FormControl(username, [Validators.required]),
-      password: new FormControl(password, [Validators.required, Validators.minLength(5)])
+      password: new FormControl(password, [Validators.required, Validators.minLength(2)])
     });
 
     (this.userForm.get('user') as FormArray).push(formGroup);
   }
 
   removeUserForm(index: number){
-    this.usersForm().removeAt(index);
+    this.getAllUsersForm().removeAt(index);
   }
-
-  usersForm(): FormArray{
+  getAllUsers(){
+    this.users$ = this.controlService.getAllUsers()
+  }
+  getAllUsersForm(): FormArray{
     return this.userForm.get("user") as FormArray;
   }
   
+  editUser(userForm: AbstractControl, validation: boolean, id: string,
+  name: string, birthDate: string, email: string, username: string, password: string){
 
-  controlRowsAndFormGroup(row: User, event: Event){
-    const editButton = event.target as HTMLButtonElement;
+    if(validation === true){
+      const user = this.userControl.find(user => user.id === id);
+      
+      if(user?.status === 'edited' || !this.isFormChanged(user!, userForm)){
+        return
+      }
+      this.controlService.editUser(id, username, password, name, birthDate, email).subscribe({
+        next: () => {
+          this.usersHasChanged = true;
+          user!.status = 'edited'
+          userForm.disable();
+        },
+        error: () => {
+          user!.status = 'error'
+        }
+      })
+    }
 
+  }
+
+  editAllUsers(validation: boolean){
+    if(validation === true){
+      const usersForm = this.getAllUsersForm();
+      usersForm.controls.forEach((userForm) => {
+        this.editUser(userForm, validation, userForm.value.id, userForm.value.name, userForm.value.birthDate,
+        userForm.value.email, userForm.value.username, userForm.value.password);
+      });
+    }
+  }
+
+  controlRowsAndFormGroup(row: User){
 
     //retorna o index do array rowsToEdit caso o usuário já tenha sido selecionado, caso contrário retorna -1
     const index = this.userControl.findIndex(user => user.id === row.id);
-
+    
     if(index !== -1){
       this.userControl.splice(index, 1);
       this.removeUserForm(index);
-      editButton.classList.remove('registry__edit-button--active');
       
     }else{
-      row.edited = false;
+      row.status = 'unchanged';
       this.userControl.push(row);
       this.createUserForm(row.id, row.name, row.birthDate, row.email, row.username, row.password);
-      editButton.classList.add('registry__edit-button--active');
     }
+  }
+
+  isUserOnRegisterList(row: User): boolean{
+    const user = this.userControl.find(user => user.id === row.id) || undefined;
+
+    if(user){
+      return true
+    }
+    return false
   }
 
   toggleShowPassword(event: Event){
@@ -107,7 +146,6 @@ export class UsersControlPageComponent implements OnInit{
     initial.username !== form.username || 
     initial.password !== form.password
 
-
     return result;
   }
 
@@ -115,23 +153,33 @@ export class UsersControlPageComponent implements OnInit{
 
     const condition = (initial: User, formValues: AbstractControl) => {
       const form = formValues.value
-      return initial.id === form.id &&
+      return (initial.id === form.id &&
              initial.name === form.name &&
              initial.birthDate === form.birthDate &&
              initial.email === form.email &&
              initial.username === form.username &&
-             initial.password === form.password;
+             initial.password === form.password) 
+             || (initial.status === 'edited') //exceção para caso o formulario ja tenha sido editado, retornar true
     };
 
     const result = this.userControl.every((user, index) => {
-      return  condition(user, this.usersForm().at(index));
+      return  condition(user, this.getAllUsersForm().at(index));
     })
 
     return result;
   }
 
-  test(user: [User]){
-    
+  closeEditor(){
+    this.isEditorActive = false;
+
+    if(this.usersHasChanged){
+      this.getAllUsers(); // atualiza os usuarios na tabela;
+    }
+  }
+
+  openEditor(){
+    this.isEditorActive = true
+    this.usersHasChanged = false;
   }
 
   changeTable(tableName: string){

@@ -37,12 +37,21 @@
 
     &__filled{
         background-color: hsl(var(--primary));
-        color: hsl(var(--primary-foreground)) ;
+        color: hsl(var(--destructive-foreground)) ;
         border-color: transparent;
         &:hover:not(:disabled){
             cursor: pointer;
             background-color: hsl(var(--primary) / .95);
             color: hsl(var(--primary-foreground));
+        }
+
+        &--ok{
+            background-color: hsl(var(--successful));
+            &:hover:not(:disabled){
+                cursor: default;
+                background-color: hsl(var(--successful));
+                color: hsl(var(--destructive-foreground));
+            }
         }
     }
 
