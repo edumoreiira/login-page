@@ -55,6 +55,15 @@
             }
         }
 
+        &--alert{
+            background-color: hsl(var(--alert));
+            color: hsl(var(--destructive-foreground));
+            &:hover:not(:disabled){
+                background-color: hsl(var(--alert) / .9);
+                color: hsl(var(--destructive-foreground));
+            }
+        }
+
         &--error{
             background-color: hsl(var(--destructive));
             color: hsl(var(--destructive-foreground));

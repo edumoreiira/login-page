@@ -99,7 +99,7 @@
 
         max-width: 300px;
 
-        &--actions {
+        &--actions-right {
             position: sticky;
             right: 0;
             background-color: hsl(var(--card));
@@ -137,7 +137,7 @@
         border: 0;
         cursor: pointer;
         font-weight: 600;
-        color: hsl(39, 83%, 61%);
+        color: hsl(var(--alert));
         transition: color 150ms ease-in-out;
         &:hover {
             text-decoration: underline;
@@ -227,12 +227,17 @@
         }
     }
     &__row{
+        transition: background-color 200ms ease-in-out;
         &--edited{
             background-color: hsl(var(--successful) / .15);
         }
 
         &--error{
             background-color: hsl(var(--destructive) / .15);
+        }
+
+        &--undo{
+            background-color: hsl(var(--alert) / .15);
         }
     }
     
@@ -246,20 +251,30 @@
     }
 
     &__cell{
-        &--edited, &--error{
+        transition: background-color 200ms ease-in-out;
+        &--edited, &--error, &--undo{
             background-color: transparent;
         }
-    }
-
-    &__cell--delete{
-        font-size: 1.5em;
-
+        &--actions-left{
+            font-size: 1.4em;
+        }
         &--icon{
             transition: color 150ms ease-in-out;
             cursor: pointer;
-            &:hover{
+            &-delete:hover{
                 color: hsl(var(--destructive));
             }
+            &-undo:hover{
+                color: hsl(var(--alert));
+            }
+        }
+        &__actions__wrapper{
+            display: flex;
+            gap: .5em;
+            align-items: center;
+            justify-content: center;
         }
     }
+
+    
 }

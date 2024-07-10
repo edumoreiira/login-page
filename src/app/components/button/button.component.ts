@@ -1,8 +1,8 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 
-type ButtonTypes = 'transparent' | 'successful' | 'filled';
-type ButtonStatus = 'error' | 'ok' | 'default';
+type ButtonTypes = 'transparent' | 'successful' | 'filled' ;
+type ButtonStatus = 'error' | 'ok' | 'default' | 'alert';
 
 @Component({
   selector: 'app-button',

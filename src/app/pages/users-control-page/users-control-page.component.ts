@@ -8,10 +8,10 @@ import { DropdownListOptions } from '../../models/dropdown-list-options.interfac
 import { fadeInOut, parentAnimations, popUp, slide } from '../../animations/transition-animations';
 import { ButtonComponent } from '../../components/button/button.component';
 import { LoginSignupService } from '../../services/login-signup.service';
-import { Observable, shareReplay } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-type UserStatus = 'edited' | 'error' | 'unchanged';
+type UserStatus = 'edited' | 'error' | 'unchanged' | 'undo';
 @Component({
   selector: 'app-users-control-page',
   standalone: true,
@@ -74,20 +74,23 @@ export class UsersControlPageComponent implements OnInit{
   
   editUser(userForm: AbstractControl, validation: boolean, id: string,
   name: string, birthDate: string, email: string, username: string, password: string){
-
+    console.log(validation)
     if(validation === true){
       const user = this.userControl.find(user => user.id === id);
       
-      if(user?.status === 'edited' || !this.isFormChanged(user!, userForm)){
+      if(user?.status === 'edited' || (!this.isFormChanged(user!, userForm) && user?.status !== 'undo') ){
+        console.log("x")
         return
       }
       this.controlService.editUser(id, username, password, name, birthDate, email).subscribe({
         next: () => {
+          console.log("y")
           this.usersHasChanged = true;
           user!.status = 'edited'
           userForm.disable();
         },
         error: () => {
+          console.log("z")
           user!.status = 'error'
         }
       })
@@ -103,6 +106,22 @@ export class UsersControlPageComponent implements OnInit{
         userForm.value.email, userForm.value.username, userForm.value.password);
       });
     }
+  }
+
+  undoChanges(userForm: AbstractControl, index: number){
+
+    const backupUser = this.userControl[index];
+    userForm.enable();
+    this.userControl[index].status = 'undo';
+
+    userForm.patchValue({
+      name: backupUser.name,
+      birthDate: backupUser.birthDate,
+      email: backupUser.email,
+      username: backupUser.username,
+      password: backupUser.password
+    })
+    // console.log(userForm)
   }
 
   controlRowsAndFormGroup(row: User){
@@ -154,6 +173,11 @@ export class UsersControlPageComponent implements OnInit{
 
     const condition = (initial: User, formValues: AbstractControl) => {
       const form = formValues.value
+
+      if(initial.status === 'undo'){
+        return false; // caso tenha algum formulario em estado 'undo', retornará false antes de checar os outros
+      }
+
       return (initial.id === form.id &&
              initial.name === form.name &&
              initial.birthDate === form.birthDate &&
@@ -171,10 +195,15 @@ export class UsersControlPageComponent implements OnInit{
   }
 
   userStatus(index: number): UserStatus{
-    if(this.userControl[index].status === 'edited'){
+    const user = this.userControl[index];
+    const userForm = this.userForm.get('user')!.get([index]);
+    console.log(userForm)
+    if(user.status === 'edited'){
       return 'edited'
-    }else if(this.userControl[index].status === 'error'){
+    }else if(user.status === 'error'){
       return 'error'
+    }else if(user.status === 'undo' && !this.isFormChanged(user, userForm!)){
+      return 'undo'
     }
     return 'unchanged'
   }

@@ -33,7 +33,7 @@ pageTitle="Painel de controle dos usuários"
                             <th class="registry__header-cell registry__header-cell--id" @slide>{{column.name}}</th>
                         }
                     }
-                    <th class="registry__header-cell registry__header-cell--actions"></th>
+                    <th class="registry__header-cell registry__header-cell--actions-right"></th>
                 </tr>
             </thead>
             <tbody class="registry__body">
@@ -71,7 +71,7 @@ pageTitle="Painel de controle dos usuários"
                             (click)="toggleShowPassword($event)">{{user.password}}</span>
                         </td>
                     }
-                    <td class="registry__cell registry__cell--actions">
+                    <td class="registry__cell registry__cell--actions-right">
                         <button type="button" class="registry__edit-button" 
                         [ngClass]="{'registry__edit-button--active': isUserOnRegisterList(user)}"
                         (click)="controlRowsAndFormGroup(user)">Editar</button>
@@ -111,7 +111,7 @@ pageTitle="Painel de controle dos usuários"
                             @for(column of tableColumns; track $index){
                                 <th class="editor__header-cell editor__header-cell--id">{{column.name}}</th>
                             }
-                            <th class="editor__header-cell editor__header-cell--actions"></th>
+                            <th class="editor__header-cell editor__header-cell--actions-right"></th>
                         </tr>
 
                     </thead>
@@ -120,11 +120,19 @@ pageTitle="Painel de controle dos usuários"
                         [formGroupName]="i" class="editor__row" 
                         [ngClass]="{
                             'editor__row--edited': userStatus(i) === 'edited',
-                            'editor__row--error': userStatus(i) === 'error'
+                            'editor__row--error': userStatus(i) === 'error',
+                            'editor__row--undo': userStatus(i) === 'undo'
                         }">
                         
-                            <td class="editor__cell editor__cell--delete">
-                                <i class="fi fi-rr-circle-xmark editor__cell--delete--icon"></i>
+                            <td class="editor__cell editor__cell--actions-left">
+                                <div class="editor__cell__actions__wrapper">
+                                    <i class="fi fi-rr-circle-xmark editor__cell--icon editor__cell--icon-delete"></i>
+                                    @if(userStatus(i) === 'edited' && isFormChanged(userControl[i], user)){
+                                        <i class="fi fi-rr-trash-undo editor__cell--icon editor__cell--icon-undo"
+                                        (click)="undoChanges(user, i)"
+                                        ></i>
+                                    }
+                                </div>
                             </td>
                             <td class="editor__cell editor__cell--id" [title]="user.value.id">
                                 <span class="editor__item--id">{{user.value.id}}</span>
@@ -161,20 +169,31 @@ pageTitle="Painel de controle dos usuários"
                                 formControlName="password"> 
                             </td>
 
-                            <td class="editor__cell editor__cell--actions" [ngClass]="{
+                            <td class="editor__cell editor__cell--actions-right" [ngClass]="{
                                 'editor__cell--edited': userStatus(i) === 'edited',
-                                'editor__cell--error': userStatus(i) === 'error'
+                                'editor__cell--error': userStatus(i) === 'error',
+                                'editor__cell--undo': userStatus(i) === 'undo',
+                                
                             }">
                                 <app-button
-                                [name]="userStatus(i) === 'edited' ? 'Ok' : 
-                                userStatus(i) === 'error' ? 'Aplicar' :
-                                'Aplicar'"
                                 type="filled"
                                 minWidth="70px"
-                                [isDisabled]="userStatus(i) === 'edited' ? false : (!isFormChanged(userControl[i], user) || user.invalid)"
+
+                                [name]="userStatus(i) === 'edited' ? 'Ok' : 
+                                userStatus(i) === 'error' ? 'Aplicar' :
+                                userStatus(i) === 'undo' ? 'Desfazer' :
+                                'Aplicar'"
+
+                                [isDisabled]="
+                                userStatus(i) === 'edited' ? false :
+                                userStatus(i) === 'undo' ? false :
+                                (!isFormChanged(userControl[i], user) || user.invalid)"
+
                                 [status]="userStatus(i) === 'edited' ? 'ok' :
+                                userStatus(i) === 'undo' ? 'alert' :
                                 userStatus(i) === 'error' ? 'error' :
                                 'default'"
+
                                 (onClick)="editUser(user, !user.invalid, user.value.id, user.value.name,
                                  user.value.birthDate, user.value.email,user.value.username, user.value.password)"
                                 ></app-button>
