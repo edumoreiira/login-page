@@ -12,7 +12,7 @@ import { Observable, take } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalService } from '../../services/modal.service';
 
-type UserStatus = 'edited' | 'error' | 'unchanged' | 'undo';
+type UserStatus = 'edited' | 'error' | 'unchanged' | 'undo' | 'deleted';
 @Component({
   selector: 'app-users-control-page',
   standalone: true,
@@ -79,23 +79,23 @@ export class UsersControlPageComponent implements OnInit{
   
   editUser(userForm: AbstractControl, validation: boolean, id: string,
   name: string, birthDate: string, email: string, username: string, password: string){
-    console.log(validation)
     if(validation === true){
       const user = this.userControl.find(user => user.id === id);
       
-      if(user?.status === 'edited' || (!this.isFormChanged(user!, userForm) && user?.status !== 'undo') ){
-        console.log("x")
+      if(user?.status === 'edited' || 
+        (!this.isFormChanged(user!, userForm) && user?.status !== 'undo') ||
+        user?.status === 'deleted'
+      ){
         return
       }
-      this.controlService.editUser(id, username, password, name, birthDate, email).subscribe({
+      this.controlService.editUser(id, username, password, name, birthDate, email)
+      .subscribe({
         next: () => {
-          console.log("y")
-          this.usersHasChanged = true;
+          this.usersHasChanged = true
           user!.status = 'edited'
           userForm.disable();
         },
         error: () => {
-          console.log("z")
           user!.status = 'error'
         }
       })
@@ -113,6 +113,19 @@ export class UsersControlPageComponent implements OnInit{
     }
   }
 
+  deleteUser(userForm: AbstractControl, id: string): void {
+    const user = this.userControl.find(user => user.id === id);
+
+    this.controlService.deleteUser(id)
+    .subscribe({
+      next: () => {
+        this.usersHasChanged = true
+        user!.status = 'deleted'
+        userForm.disable();
+      }
+    });
+  }  
+
   undoChanges(userForm: AbstractControl, index: number){
 
     const backupUser = this.userControl[index];
@@ -126,7 +139,6 @@ export class UsersControlPageComponent implements OnInit{
       username: backupUser.username,
       password: backupUser.password
     })
-    // console.log(userForm)
   }
 
   controlRowsAndFormGroup(row: User){
@@ -190,6 +202,7 @@ export class UsersControlPageComponent implements OnInit{
              initial.username === form.username &&
              initial.password === form.password) 
              || (initial.status === 'edited') //exceção para caso o formulario ja tenha sido editado, retornar true
+             || (initial.status === 'deleted') //exceção para caso o formulario ja tenha sido editado, retornar true
     };
 
     const result = this.userControl.every((user, index) => {
@@ -202,11 +215,12 @@ export class UsersControlPageComponent implements OnInit{
   userStatus(index: number): UserStatus{
     const user = this.userControl[index];
     const userForm = this.userForm.get('user')!.get([index]);
-    console.log(userForm)
     if(user.status === 'edited'){
       return 'edited'
     }else if(user.status === 'error'){
       return 'error'
+    }else if(user.status === 'deleted'){
+      return 'deleted'
     }else if(user.status === 'undo' && !this.isFormChanged(user, userForm!)){
       return 'undo'
     }
@@ -216,8 +230,17 @@ export class UsersControlPageComponent implements OnInit{
   closeEditor(){
     this.isEditorActive = false;
 
+    console.log('users:', this.userControl)
+
     if(this.usersHasChanged){
-      this.getAllUsers(); // atualiza os usuarios na tabela;
+      for(let i = this.userControl.length - 1 ; i >= 0 ; i--){
+        if (this.userControl[i].status === 'deleted'){ // remove os usuarios deletados do array de controle e formulario
+          this.userControl.splice(i,1);
+          this.getAllUsersForm().removeAt(i)
+        }
+      }
+
+      this.getAllUsers(); // atualiza os usuarios na tabela
     }
   }
 
@@ -235,19 +258,18 @@ export class UsersControlPageComponent implements OnInit{
     }
   }
 
-  openModalOnUserDelete() {
+  openModalOnUserDelete(username: string, userForm: AbstractControl, id: string) {
     this.modalService.openModal({
       title: "Ação irreversível",
-      description: "Ao deletar o usuário, não será possível recuperar os dados! Deseja prosseguir?",
-      buttonName1: "Sim",
-      buttonName2: "Não"
+      description: `Ao deletar o usuário ${username}, não será possível recuperar os dados. Deseja prosseguir?`,
+      buttonName1: "Cancelar",
+      buttonName2: "Deletar",
+      buttonStatus: "error"
     })
     .pipe(take(1))
     .subscribe(result => {
-      if (result){
-        console.log("ok");
-      }else{
-        console.log("cancel")
+      if (result === true){
+        this.deleteUser(userForm, id);
       }
     });
   }

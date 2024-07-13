@@ -190,7 +190,7 @@
         flex-direction: column;
         gap: 1em;
         border-radius: calc(var(--radius) * 1.5);
-        width: min(1000px, 85%);
+        width: min(1100px, 85%);
         max-height: (75%);
         background-color: hsl(var(--card));
         padding: 1em;
@@ -221,19 +221,39 @@
         
         &--modified{
             color: hsl(var(--card-foreground));
-            &:disabled{
-                color: hsl(var(--successful));
-            }
         }
     }
+
+    // &__row--deleted{
+    //     input.editor__input, span.editor__item--id{
+    //         color: hsl(var(--destructive))
+    //     }
+    //     span.editor__item--id{
+    //         font-weight: 600;
+    //     }
+    // }
+
     &__row{
         transition: background-color 200ms ease-in-out;
         &--edited{
             background-color: hsl(var(--successful) / .15);
+            input.editor__input--modified{
+                color: hsl(var(--successful));
+            }
         }
 
         &--error{
             background-color: hsl(var(--destructive) / .15);
+        }
+
+        &--deleted{
+            background-color: hsl(var(--destructive) / .15);
+            input.editor__input, span.editor__item--id{
+                color: hsl(var(--destructive));
+            }
+            span.editor__item--id{
+                font-weight: 600;
+            }
         }
 
         &--undo{
@@ -252,7 +272,7 @@
 
     &__cell{
         transition: background-color 200ms ease-in-out;
-        &--edited, &--error, &--undo{
+        &--edited, &--error, &--deleted, &--undo{
             background-color: transparent;
         }
         &--actions-left{
@@ -272,7 +292,7 @@
             display: flex;
             gap: .5em;
             align-items: center;
-            justify-content: center;
+            justify-content: start;
         }
     }
 

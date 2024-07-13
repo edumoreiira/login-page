@@ -121,16 +121,22 @@ pageTitle="Painel de controle dos usuários"
                         [ngClass]="{
                             'editor__row--edited': userStatus(i) === 'edited',
                             'editor__row--error': userStatus(i) === 'error',
-                            'editor__row--undo': userStatus(i) === 'undo'
+                            'editor__row--deleted': userStatus(i) === 'deleted',
+                            'editor__row--undo': userStatus(i) === 'undo',
                         }">
                         
                             <td class="editor__cell editor__cell--actions-left">
                                 <div class="editor__cell__actions__wrapper">
-                                    <i class="fi fi-rr-circle-xmark editor__cell--icon editor__cell--icon-delete"></i>
+                                    @if(userStatus(i) !== 'deleted'){
+                                        <i class="fi fi-rr-circle-xmark editor__cell--icon editor__cell--icon-delete"
+                                        (click)="openModalOnUserDelete(userControl[i].username, user, user.value.id)">
+                                        </i>
+                                    }
+
                                     @if(userStatus(i) === 'edited' && isFormChanged(userControl[i], user)){
                                         <i class="fi fi-rr-trash-undo editor__cell--icon editor__cell--icon-undo"
-                                        (click)="undoChanges(user, i)"
-                                        ></i>
+                                        (click)="undoChanges(user, i)">
+                                        </i>
                                     }
                                 </div>
                             </td>
@@ -172,26 +178,30 @@ pageTitle="Painel de controle dos usuários"
                             <td class="editor__cell editor__cell--actions-right" [ngClass]="{
                                 'editor__cell--edited': userStatus(i) === 'edited',
                                 'editor__cell--error': userStatus(i) === 'error',
+                                'editor__cell--deleted': userStatus(i) === 'deleted',
                                 'editor__cell--undo': userStatus(i) === 'undo',
                                 
                             }">
                                 <app-button
-                                type="filled"
+                                [type]="userStatus(i) === 'deleted' ? 'transparent' : 'filled'"
                                 minWidth="70px"
 
                                 [name]="userStatus(i) === 'edited' ? 'Ok' : 
                                 userStatus(i) === 'error' ? 'Aplicar' :
+                                userStatus(i) === 'deleted' ? 'Removido' :
                                 userStatus(i) === 'undo' ? 'Desfazer' :
                                 'Aplicar'"
 
                                 [isDisabled]="
                                 userStatus(i) === 'edited' ? false :
+                                userStatus(i) === 'deleted' ? true :
                                 userStatus(i) === 'undo' ? false :
                                 (!isFormChanged(userControl[i], user) || user.invalid)"
 
                                 [status]="userStatus(i) === 'edited' ? 'ok' :
                                 userStatus(i) === 'undo' ? 'alert' :
-                                userStatus(i) === 'error' ? 'error' :
+                                userStatus(i) === 'deleted' ? 'error' :
+                                userStatus(i) === 'error'  ? 'error' :
                                 'default'"
 
                                 (onClick)="editUser(user, !user.invalid, user.value.id, user.value.name,

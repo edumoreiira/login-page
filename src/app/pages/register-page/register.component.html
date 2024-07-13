@@ -15,7 +15,7 @@ secondaryButtonText="Fazer login"
     placeholder="Nome"
     (inputElement)="isValidForm($event)"
     >
-    <!-- @if(registerForm.controls.name.invalid &&
+    @if(registerForm.controls.name.invalid &&
     registerForm.controls.name.touched || registerForm.controls.name.dirty){
        
        @if(registerForm.controls.name.errors?.['required']){
@@ -23,7 +23,7 @@ secondaryButtonText="Fazer login"
        } @else if(registerForm.controls.name.errors?.['noSpecialCharacters']){
            <small @fadeInOut>Caracteres especiais não são permitidos</small>
        }
-   } -->
+   }
     </app-input>
 
     <app-input
@@ -32,7 +32,7 @@ secondaryButtonText="Fazer login"
     placeholder="Nome de usuário"
     (inputElement)="isValidForm($event)"
     >
-    <!-- @if(registerForm.controls.username.invalid &&
+    @if(registerForm.controls.username.invalid &&
      registerForm.controls.username.touched || registerForm.controls.username.dirty){
         
         @if(registerForm.controls.username.errors?.['required']){
@@ -40,7 +40,7 @@ secondaryButtonText="Fazer login"
         } @else if(registerForm.controls.username.errors?.['noSpaceAllowed']){
             <small @fadeInOut>Nome de usuário não pode conter espaço</small>
         }
-    } -->
+    }
     </app-input>
 
     <app-input
@@ -49,7 +49,7 @@ secondaryButtonText="Fazer login"
     placeholder="Data de nascimento"
     (inputElement)="isValidForm($event)"
     >
-    <!-- @if(registerForm.controls.dateBirth.invalid &&
+    @if(registerForm.controls.dateBirth.invalid &&
      registerForm.controls.dateBirth.touched || registerForm.controls.dateBirth.dirty){
         
         @if(registerForm.controls.dateBirth.errors?.['required']){
@@ -58,7 +58,7 @@ secondaryButtonText="Fazer login"
         }@else if (registerForm.controls.dateBirth.errors?.['invalidDateFormat']) {
             <small @fadeInOut>{{registerForm.controls.dateBirth.errors?.['invalidDateFormat']}}</small>
         }
-    } -->
+    }
     </app-input>
     
     <app-input
@@ -67,7 +67,7 @@ secondaryButtonText="Fazer login"
     placeholder="E-mail"
     (inputElement)="isValidForm($event)"
     >
-    <!-- @if(registerForm.controls.email.invalid &&
+    @if(registerForm.controls.email.invalid &&
     registerForm.controls.email.touched || registerForm.controls.email.dirty){
        
        @if(registerForm.controls.email.errors?.['required']){
@@ -75,7 +75,7 @@ secondaryButtonText="Fazer login"
        } @else if(registerForm.controls.email.errors?.['email']){
            <small @fadeInOut>Formato inválido</small>
        }
-   } -->
+   }
     </app-input>
 
     <app-input
@@ -85,7 +85,7 @@ secondaryButtonText="Fazer login"
     [hideShowPassword]="true"
     (inputElement)="isValidForm($event)"
     >
-    <!-- @if(registerForm.controls.password.invalid &&
+    @if(registerForm.controls.password.invalid &&
     registerForm.controls.password.touched || registerForm.controls.password.dirty){
        
        @if(registerForm.controls.password.errors?.['required']){
@@ -97,7 +97,7 @@ secondaryButtonText="Fazer login"
        } @else if(registerForm.controls.password.errors?.['requiredSpecialCharacters']){
            <small @fadeInOut>A senha deve conter no mínimo um caráctere especial: !&#64;#$%^&*</small>
        }
-   } -->
+   }
     </app-input>
     
     <app-input

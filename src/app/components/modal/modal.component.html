@@ -1,6 +1,22 @@
-<div class="modal">
-    <h2 class="modal__title">{{title}}</h2>
-    <p class="modal__description">{{description}}</p>
-    <button type="submit" class="modal__button">{{buttonName1}}</button>
-    <button type="submit" class="modal__button">{{buttonName2}}</button>
+<div class="modal" *ngIf="isModalVisible" @parentAnimation>
+    <div class="modal__background" (click)="handleModalClose(false)" @fadeInOut></div>
+    <div class="modal__wrapper" @popUp>
+        <h2 class="modal__title">{{title}}</h2>
+        <p class="modal__description">{{description}}</p>
+        <div class="modal__buttons">
+            <app-button
+            [name]="buttonName1"
+            type="transparent"
+            (onClick)="handleModalClose(false)"
+            >
+            </app-button>
+            <app-button
+            [name]="buttonName2"
+            type="filled"
+            [status]="buttonStatus"
+            (onClick)="handleModalClose(true)"
+            >
+            </app-button>
+        </div>
+    </div>
 </div>

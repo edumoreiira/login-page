@@ -33,4 +33,8 @@ export class LoginSignupService {
   editUser(id: string, username: string, password: string, name: string, birthDate: string, email: string){
     return this.http.put(this.url, { id, username, password, name, birthDate, email });
   }
+
+  deleteUser(id: string){
+    return this.http.delete(this.url + `/${id}`);
+  }
 }

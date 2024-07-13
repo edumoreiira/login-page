@@ -24,6 +24,15 @@
         opacity: .5;
     }
 
+    &__transparent{
+        &--error{
+            &:disabled{
+                border-color: hsl(var(--destructive));
+                color: hsl(var(--destructive))
+            }
+        }
+    }
+
     &__successful{
         background-color: hsl(var(--successful));
         color: hsl(var(--destructive-foreground)) ;

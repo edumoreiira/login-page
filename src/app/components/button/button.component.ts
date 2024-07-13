@@ -1,9 +1,8 @@
 import { NgClass, NgStyle } from '@angular/common';
 import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { ButtonStatus } from '../../models/button.interface';
 
 type ButtonTypes = 'transparent' | 'successful' | 'filled' ;
-type ButtonStatus = 'error' | 'ok' | 'default' | 'alert';
-
 @Component({
   selector: 'app-button',
   standalone: true,
