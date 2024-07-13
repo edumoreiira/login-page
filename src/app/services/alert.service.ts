@@ -6,19 +6,19 @@ import { Alert } from '../models/alert.interface';
   providedIn: 'root'
 })
 export class AlertService {
-  private alertSource = new BehaviorSubject<Alert>({'title': '', 'description': '', 'color': ''});
-  currentAlert = this.alertSource.asObservable();
+  private alertSource$ = new BehaviorSubject<Alert>({'title': '', 'description': '', 'color': ''});
+  currentAlert = this.alertSource$.asObservable();
 
   emitAlert(message: Alert) {
     if(message.title){
       setTimeout(() => {
-        this.alertSource.next(message);
+        this.alertSource$.next(message);
       }, 500);
     }
   }
 
   removeAlert(){
-    this.alertSource.next({
+    this.alertSource$.next({
       title: '',
       description: '',
       color: ''

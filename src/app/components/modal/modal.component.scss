@@ -1,0 +1,18 @@
+:host{
+    background-color: hsla(0, 0%, 0%, 0.265);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 50;
+}
+
+.modal{
+    background-color: hsl(var(--background));
+    padding: 1.5em;
+    border-radius: var(--radius);
+}

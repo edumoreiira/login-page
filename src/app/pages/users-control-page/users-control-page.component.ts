@@ -8,14 +8,16 @@ import { DropdownListOptions } from '../../models/dropdown-list-options.interfac
 import { fadeInOut, parentAnimations, popUp, slide } from '../../animations/transition-animations';
 import { ButtonComponent } from '../../components/button/button.component';
 import { LoginSignupService } from '../../services/login-signup.service';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ModalService } from '../../services/modal.service';
 
 type UserStatus = 'edited' | 'error' | 'unchanged' | 'undo';
 @Component({
   selector: 'app-users-control-page',
   standalone: true,
-  imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent, DropdownSelectionComponent, ButtonComponent, ReactiveFormsModule, FormsModule],
+  imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent, DropdownSelectionComponent, ButtonComponent,
+   ReactiveFormsModule, FormsModule],
   templateUrl: './users-control-page.component.html',
   styleUrl: './users-control-page.component.scss',
   animations: [slide, popUp, fadeInOut, parentAnimations]
@@ -37,7 +39,10 @@ export class UsersControlPageComponent implements OnInit{
   ]
   userControl: User[] = [];
 
-  constructor(private controlService: LoginSignupService){
+  constructor(
+    private controlService: LoginSignupService,
+    private modalService: ModalService
+  ){
 
     this.userForm = new FormGroup({
       user: new FormArray([
@@ -228,6 +233,23 @@ export class UsersControlPageComponent implements OnInit{
     if(table){
       table.isActive = !table.isActive;
     }
+  }
+
+  openModalOnUserDelete() {
+    this.modalService.openModal({
+      title: "Ação irreversível",
+      description: "Ao deletar o usuário, não será possível recuperar os dados! Deseja prosseguir?",
+      buttonName1: "Sim",
+      buttonName2: "Não"
+    })
+    .pipe(take(1))
+    .subscribe(result => {
+      if (result){
+        console.log("ok");
+      }else{
+        console.log("cancel")
+      }
+    });
   }
 
 
