@@ -30,7 +30,7 @@ input[type="date"]{
         mask-size: 80%;
         mask-position: center;
         mask-repeat: no-repeat;
-        background-color: hsl(var(--foreground));
+        background-color: hsl(var(--foreground) / .5);
 
         // right: 1.5em;
     }

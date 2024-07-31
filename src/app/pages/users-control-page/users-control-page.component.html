@@ -30,13 +30,17 @@ pageTitle="Painel de controle dos usuários"
                     @for(column of tableColumns; track $index){
 
                         @if(column.isActive){
-                            <th class="registry__header-cell registry__header-cell--id" @slide>{{column.name}}</th>
+                            <th class="registry__header-cell registry__header-cell" @slide>{{column.name}}
+                                <i class="fi fi-sr-sort-alt registry__header-cell__sort"
+                                (click)="sortRegistry(column.name, $index)"></i>
+                            </th>
                         }
                     }
                     <th class="registry__header-cell registry__header-cell--actions-right"></th>
                 </tr>
             </thead>
             <tbody class="registry__body">
+                <ng-container *ngIf="showTableRows">
                 <tr *ngFor="let user of users$ | async" class="registry__row" @fadeInOut>
                     @if (tableColumns[0].isActive) {
                         <td class="registry__cell registry__cell--id" [title]="user.id" @slide>
@@ -77,6 +81,7 @@ pageTitle="Painel de controle dos usuários"
                         (click)="controlRowsAndFormGroup(user)">Editar</button>
                     </td>
                 </tr>
+                </ng-container>
             </tbody>
         </table>
     </div>

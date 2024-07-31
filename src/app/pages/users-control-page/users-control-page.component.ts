@@ -8,11 +8,13 @@ import { DropdownListOptions } from '../../models/dropdown-list-options.interfac
 import { fadeInOut, parentAnimations, popUp, slide } from '../../animations/transition-animations';
 import { ButtonComponent } from '../../components/button/button.component';
 import { LoginSignupService } from '../../services/login-signup.service';
-import { Observable, take } from 'rxjs';
+import { BehaviorSubject, Observable, take } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalService } from '../../services/modal.service';
 
 type UserStatus = 'edited' | 'error' | 'unchanged' | 'undo' | 'deleted';
+type TableSort =  'none' | 'registro-asc' | 'registro-desc' | 'nome-asc' | 'nome-desc' | 'data-asc' | 'data-desc' | 'email-asc' |
+ 'email-desc' | 'username-asc' | 'username-desc' | 'senha-asc' | 'senha-desc';
 @Component({
   selector: 'app-users-control-page',
   standalone: true,
@@ -27,8 +29,11 @@ type UserStatus = 'edited' | 'error' | 'unchanged' | 'undo' | 'deleted';
 export class UsersControlPageComponent implements OnInit{
   usersHasChanged: boolean = false;
   isEditorActive: boolean = false;
+  showTableRows: boolean = true;
+  sortedBy: TableSort = "none";
   userForm: FormGroup;
-  users$ = new Observable<User[]>();
+  private usersSubject = new BehaviorSubject<User[]>([]);
+  users$ = this.usersSubject.asObservable();
   tableColumns: DropdownListOptions[] = [
     { name: 'Registro', isActive: true },
     { name: 'Nome', isActive: true },
@@ -71,7 +76,9 @@ export class UsersControlPageComponent implements OnInit{
     this.getAllUsersForm().removeAt(index);
   }
   getAllUsers(){
-    this.users$ = this.controlService.getAllUsers()
+    this.controlService.getAllUsers().subscribe((data) => {
+      this.usersSubject.next(data);
+    })
   }
   getAllUsersForm(): FormArray{
     return this.userForm.get("user") as FormArray;
@@ -230,8 +237,6 @@ export class UsersControlPageComponent implements OnInit{
   closeEditor(){
     this.isEditorActive = false;
 
-    console.log('users:', this.userControl)
-
     if(this.usersHasChanged){
       for(let i = this.userControl.length - 1 ; i >= 0 ; i--){
         if (this.userControl[i].status === 'deleted'){ // remove os usuarios deletados do array de controle e formulario
@@ -241,6 +246,8 @@ export class UsersControlPageComponent implements OnInit{
       }
 
       this.getAllUsers(); // atualiza os usuarios na tabela
+      this.removeSortedClass(); // remove a classe de ordenação da tabela
+    
     }
   }
 
@@ -275,4 +282,105 @@ export class UsersControlPageComponent implements OnInit{
   }
 
 
+  sortRegistry(columnName: string, index: number){
+    const currentValue = this.usersSubject.getValue();
+    const sortElements = document.querySelectorAll('.registry__header-cell__sort');
+
+    //retorna true caso o elemento já esteja ativo, caso contrário retorna false
+    const isActiveStatus = sortElements[index].classList.contains('registry__header-cell__sort--active')
+
+    
+    sortElements.forEach(((element, i) => {
+      element.classList.remove('registry__header-cell__sort--active');
+      
+      if(i !== index ){
+        element.classList.remove('registry__header-cell__sort--rotate');
+      }
+    }));
+
+    if (isActiveStatus) {
+      sortElements[index].classList.add('registry__header-cell__sort--active');
+      sortElements[index].classList.toggle('registry__header-cell__sort--rotate');
+    } else {
+      sortElements[index].classList.add('registry__header-cell__sort--active');
+    }
+    
+    switch (columnName) {
+      case 'Registro':
+        if (this.sortedBy !== 'registro-asc') {
+          currentValue.sort((a, b) => a.id.localeCompare(b.id, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'registro-asc'
+        } else if (this.sortedBy === 'registro-asc'){
+          currentValue.sort((a, b) => b.id.localeCompare(a.id, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'registro-desc'
+        }
+        break;
+
+      case 'Nome':
+        if (this.sortedBy !== 'nome-asc') {
+          currentValue.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'nome-asc'
+        } else if (this.sortedBy === 'nome-asc'){
+          currentValue.sort((a, b) => b.name.localeCompare(a.name, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'nome-desc'
+        }
+      break;
+    
+      case 'Data':
+        if(this.sortedBy !== 'data-asc'){
+          currentValue.sort((a, b) => a.birthDate.localeCompare(b.birthDate, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'data-asc'
+        } else if (this.sortedBy === 'data-asc'){
+          currentValue.sort((a, b) => b.birthDate.localeCompare(a.birthDate, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'data-desc'
+        }
+      break;
+    
+      case 'E-mail':
+        if(this.sortedBy !== 'email-asc'){
+          currentValue.sort((a, b) => a.email.localeCompare(b.email, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'email-asc'
+        } else if (this.sortedBy === 'email-asc'){
+          currentValue.sort((a, b) => b.email.localeCompare(a.email, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'email-desc'
+        }
+      break;
+    
+      case 'Username':
+        if(this.sortedBy !== 'username-asc'){
+          currentValue.sort((a, b) => a.username.localeCompare(b.username, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'username-asc'
+        } else if (this.sortedBy === 'username-asc'){
+          currentValue.sort((a, b) => b.username.localeCompare(a.username, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'username-desc'
+        }
+        break;
+    
+      case 'Senha':
+        if(this.sortedBy !== 'senha-asc'){
+          currentValue.sort((a, b) => a.password.localeCompare(b.password, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'senha-asc'
+        } else if (this.sortedBy === 'senha-asc'){
+          currentValue.sort((a, b) => b.password.localeCompare(a.password, undefined, { sensitivity: 'base' }));
+          this.sortedBy = 'senha-desc'
+        }
+      break;
+    
+      default:
+        break;
+    }
+
+    this.showTableRows = false;
+    setTimeout(() => {
+      this.showTableRows = true;
+    }, 150);
+  }
+
+  removeSortedClass(){
+    const sortElements = document.querySelectorAll('.registry__header-cell__sort');
+
+    sortElements.forEach((e => {
+      e.classList.remove('registry__header-cell__sort--active');
+    }));
+  }
 }
