@@ -12,6 +12,7 @@ import { popUp, slideUpDown } from '../../animations/transition-animations';
   styleUrl: './dropdown-selection.component.scss',
   animations: [slideUpDown, popUp]
 })
+
 export class DropdownSelectionComponent {
   @Input() name: string = "Dropdown";
   @Input({ required: true }) items: DropdownListOptions[] = [];

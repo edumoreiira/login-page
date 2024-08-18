@@ -3,12 +3,13 @@ import { Component, EventEmitter, Input, OnInit, Output, input } from '@angular/
 import { fadeInOut, popUp } from '../../animations/transition-animations';
 import { Alert } from '../../models/alert.interface';
 import { AlertService } from '../../services/alert.service';
+import { ThemeSelectorComponent } from '../theme-selector/theme-selector.component';
 
 
 @Component({
   selector: 'app-login-register-layout',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ThemeSelectorComponent],
   templateUrl: './login-register-layout.component.html',
   styleUrls: ['./login-register-layout.component.scss', './login-register-layout--large.component.scss'],
   animations: [fadeInOut, popUp]

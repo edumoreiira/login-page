@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Host, HostBinding } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ModalComponent } from './components/modal/modal.component';
 
@@ -10,5 +10,6 @@ import { ModalComponent } from './components/modal/modal.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  @HostBinding('class.dark')
   title = 'login-page';
 }

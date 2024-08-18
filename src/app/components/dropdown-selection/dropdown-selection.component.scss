@@ -9,7 +9,8 @@
         align-items: center;
         justify-content: center;
         border: 1px solid hsl(var(--input));
-        padding: .3em;
+        // padding: .3em;
+        padding: 0.55em 1em;
         border-radius: var(--radius);
         background-color: transparent;
         color: hsl(var(--card-foreground));

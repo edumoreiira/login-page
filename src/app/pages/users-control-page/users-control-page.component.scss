@@ -112,7 +112,7 @@
         color: hsl(var(--muted-foreground));
         text-wrap: nowrap;
         &__sort{
-            display: inline-block;
+            display: inline-flex;
             font-size: .6em;
             cursor: pointer;
             opacity: .4;
