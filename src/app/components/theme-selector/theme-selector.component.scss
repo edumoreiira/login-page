@@ -4,6 +4,7 @@
     border-radius: var(--radius);
     border: 1px solid hsl(var(--border));
     position: relative;
+    z-index: 100;
 
     &__options{
         position: absolute;
@@ -13,7 +14,6 @@
         gap: 1em;
         right: 0;
         top: calc(100% + .4em);
-        z-index: 100;
         background-color: hsl(var(--popover));
         border: 1px solid hsl(var(--border));
         border-radius: var(--radius);

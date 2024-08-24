@@ -49,10 +49,14 @@
         
         
         <div *ngIf="!disableAllButtons" class="action-wrapper">
-            <button type="submit" (click)="submit()" class="primary-button" type="button" [disabled]="disablePrimaryButton">
+            <button type="submit" (click)="submit()" class="primary-button" type="button" 
+            [disabled]="disablePrimaryButton" style="view-transition-name: primary-button-login-register;">
                 <ng-content select="[primary-button]"></ng-content>
             </button>
-            <button type="text" class="secondary-button" href="" (click)="secondaryButtonOnClick.emit()">{{secondaryButtonText()}}</button>
+            <button type="text" class="secondary-button" href="" (click)="secondaryButtonOnClick.emit()"
+             style="view-transition-name: secondary-button-login-register;">
+                {{secondaryButtonText()}}
+            </button>
         </div>
 
     </section>
