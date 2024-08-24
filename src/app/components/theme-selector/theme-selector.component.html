@@ -1,18 +1,23 @@
-<div class="theme">
+<div class="theme" (click)="toggleThemeMenu($event)">
+   
     <i class="fi fi-rr-brightness"></i>
     <!-- <i class="fi fi-rr-moon"></i> -->
-     <div class="theme__options">
-        <app-dropdown-selection
-        name="Tema"
-        [items]="themes"
-        >
-        </app-dropdown-selection>
-
-        <app-button
-        name="Claro"
-        type="filled"
-        minWidth="90px"
-        >
-        </app-button>
-     </div>
+     @if(isExpanded) {
+        <div class="theme__options" (click)="$event.stopPropagation()" @fadeInOut>
+           <app-dropdown-selection
+           name="Tema"
+           [items]="themes"
+           (clickedItem)="handleThemeChange($event)"
+           >
+           </app-dropdown-selection>
+   
+           <app-button
+           [name]="darkMode ? 'Claro' : 'Escuro'"
+           type="filled"
+           minWidth="90px"
+           (onClick)="toggleDarkMode()"
+           >
+           </app-button>
+        </div>
+     }
 </div>

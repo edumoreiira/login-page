@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import { Theme } from '../models/theme.interface';
 
 @Injectable({
@@ -7,14 +6,20 @@ import { Theme } from '../models/theme.interface';
 })
 export class ThemeSelectorService {
 
-  private themeSubject$ = new Subject<Theme>();
-
-  setTheme(theme: Theme): void {
-    this.themeSubject$.next(theme);
+  private readonly themeKey = 'theme';
+  
+  setLocalStorageTheme(theme: Theme) {
+    localStorage.setItem(this.themeKey, JSON.stringify(theme));
   }
 
-  getTheme(): Subject<Theme> {
-    return this.themeSubject$;
+  getLocalStorageTheme(): Theme | null {
+    const themeString = localStorage.getItem(this.themeKey);
+    return themeString ? JSON.parse(themeString) : null;
+  }
+
+  applyTheme(theme: Theme) {
+    const darkMode = theme.isDark ? ' dark' : ''
+    document.body.className = theme.name + darkMode;
   }
 
   

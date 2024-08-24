@@ -7,13 +7,14 @@
 
     &__options{
         position: absolute;
+        cursor: default;
         font-size: .8em;
         display: flex;
         gap: 1em;
         right: 0;
         top: calc(100% + .4em);
         z-index: 100;
-        background-color: var(--background);
+        background-color: hsl(var(--popover));
         border: 1px solid hsl(var(--border));
         border-radius: var(--radius);
         padding: 1em;

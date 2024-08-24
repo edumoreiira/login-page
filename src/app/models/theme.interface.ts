@@ -1,4 +1,6 @@
+
 export interface Theme {
-    theme: string;
+    name:  'neutral' | 'gray' | 'rose' | 'orange' | 'red' | 'green' | 'blue'
+    | 'yellow' | 'violet';
     isDark: boolean;
 }

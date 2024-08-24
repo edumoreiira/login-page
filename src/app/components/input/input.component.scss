@@ -12,7 +12,7 @@
         border: 1px solid hsl(var(--input));
         padding: .75em 1.25em;
         width: 100%;
-        background-color: transparent;
+        background-color: hsl(var(--background));
         text-overflow: ellipsis;
         outline: 2px solid transparent;
         transition: outline 150ms ease-in-out;
@@ -41,7 +41,7 @@
         top: .75em;
         user-select: none;
         pointer-events: none;
-        background-color: hsl(var(--card));
+        background-color: hsl(var(--background));
         border-radius: var(--radius);
         color: hsl(var(--card-foreground) / .3);
         transition: color 150ms ease-in-out,
@@ -77,10 +77,10 @@
         font-size: 1em;
         background-color: transparent;
         border: 0;
-        color: hsl(var(--card-foreground) / .3);
+        color: hsl(var(--primary) / .3);
         transition: color 150ms ease-in-out;
         &:hover, .fi-br-eye-crossed{
-            color: hsl(var(--card-foreground));
+            color: hsl(var(--primary));
         }
     }
 
