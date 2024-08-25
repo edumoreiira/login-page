@@ -10,6 +10,7 @@
 
 html, body{
     height: 100%;
+    background-color: hsl(var(--background));
 }
 
 img{
@@ -46,9 +47,18 @@ input[type="date"]{
     // }
 }
 
-::view-transition-group(main-illustration),
-::view-transition-old(main-illustration),
-::view-transition-new(main-illustration){
-    height: auto;
-    width: auto;
+
+@media (min-width: 900px) {
+    ::view-transition-group(content-container),
+    ::view-transition-old(content-container),
+    ::view-transition-new(content-container) {
+        height: 100%;
+        mix-blend-mode: normal !important;
+    }
+
+    /* Estado inicial (100% da largura) */
+    ::view-transition-old(content-container) {
+        opacity: 1 !important;
+    }
+    
 }

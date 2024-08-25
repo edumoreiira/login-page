@@ -36,11 +36,14 @@ export class LoginComponent {
         this.loginForm.value.username,
         this.loginForm.value.password
       ).subscribe({
-        next: () => this.alertService.emitAlert({
-          title: 'Login bem sucedido!',
-          description: 'Seja bem-vindo!',
-          color: 'green'
-        }),
+        next: () => {
+          this.alertService.emitAlert({
+            title: 'Login bem sucedido!',
+            description: 'Seja bem-vindo!',
+            color: 'green'
+          });
+          setTimeout(() => this.navigateTo('admin'), 500);
+        },
         error: () => this.alertService.emitAlert({
           title: 'Erro ao autenticar',
           description: 'Usuário ou senha inválidos',

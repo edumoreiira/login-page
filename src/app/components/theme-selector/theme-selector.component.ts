@@ -45,7 +45,14 @@ export class ThemeSelectorComponent implements OnInit {
   }
 
   toggleThemeMenu(event: Event) {
+    const element = event.target as HTMLElement;
     event.stopPropagation();
+    if (this.isExpanded === false) {
+      element.style.zIndex = '1000'; // Set z-index to make sure the dropdown is on top of other elements
+      console.log(element)
+    } else {
+      element.style.zIndex = 'auto'; // Reset z-index
+    }
     this.isExpanded = !this.isExpanded;
   }
 

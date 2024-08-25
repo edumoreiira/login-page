@@ -71,6 +71,10 @@
         background-color: hsl(var(--card));
     }
 
+    &__body {
+        background-color: hsl(var(--card));
+    }
+
     &__header-row,
     &__row {
         text-align: center;
@@ -188,13 +192,13 @@
     height: 100%;
     left: 0;
     top: 0;
-    z-index: 20;
+    z-index: 500;
     
     &__background{
         position: absolute;
         height: 100%;
         width: 100%;
-        background-color: hsla(0, 0%, 0%, 0.275);
+        background-color: hsla(var(--popover-background));
         z-index: -1;
     }
     &__foreground{
@@ -206,7 +210,8 @@
         border-radius: calc(var(--radius) * 1.5);
         width: min(1100px, 85%);
         max-height: (75%);
-        background-color: hsl(var(--card));
+        background-color: hsl(var(--popover));
+        color: hsl(var(--popover-foreground));
         padding: 1em;
     }
 

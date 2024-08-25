@@ -12,7 +12,7 @@
         // padding: .3em;
         padding: 0.55em 1em;
         border-radius: var(--radius);
-        background-color: transparent;
+        background-color: hsl(var(--background));
         color: hsl(var(--card-foreground));
         font-size: 1em;
         height: 100%;

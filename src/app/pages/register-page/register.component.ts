@@ -54,7 +54,7 @@ export class RegisterComponent {
           setTimeout(() => {
             this.alertService.emitAlert({
               title: 'Registro completo!',
-              description: 'Seu usuário foi cadastrado com sucesso!',
+              description: 'Usuário cadastrado com sucesso!',
               color: 'green'
             });
           }, 500);

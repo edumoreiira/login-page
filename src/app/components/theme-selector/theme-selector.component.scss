@@ -4,7 +4,10 @@
     border-radius: var(--radius);
     border: 1px solid hsl(var(--border));
     position: relative;
-    z-index: 100;
+
+    &__icon {
+        pointer-events: none;
+    }
 
     &__options{
         position: absolute;
