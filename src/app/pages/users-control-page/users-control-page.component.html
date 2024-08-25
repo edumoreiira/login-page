@@ -152,7 +152,10 @@ pageTitle="Painel de controle dos usuários"
                             <td class="editor__cell editor__cell--name" [title]="user.value.name">
                                 <input type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified': user.value.name !== userControl[i].name}"
-                                formControlName="name"> 
+                                formControlName="name">
+                                @if(getUserFormControl(i, 'name').invalid) {
+                                    <i class="fi fi-rr-info"></i>
+                                }
                             </td>
                             
                             <td class="editor__cell editor__cell--birthDate" [title]="user.value.birthDate">

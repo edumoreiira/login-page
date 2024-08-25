@@ -11,6 +11,7 @@ import { LoginSignupService } from '../../services/login-signup.service';
 import { BehaviorSubject, Observable, take } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalService } from '../../services/modal.service';
+import { noSpaceAllowed, noSpecialCharacters, requiredSpecialCharacters, validBornDate } from '../../validators/register-form.validators';
 
 type UserStatus = 'edited' | 'error' | 'unchanged' | 'undo' | 'deleted';
 type TableSort =  'none' | 'registro-asc' | 'registro-desc' | 'nome-asc' | 'nome-desc' | 'data-asc' | 'data-desc' | 'email-asc' |
@@ -34,6 +35,7 @@ export class UsersControlPageComponent implements OnInit{
   userForm: FormGroup;
   private usersSubject = new BehaviorSubject<User[]>([]);
   users$ = this.usersSubject.asObservable();
+  
   tableColumns: DropdownListOptions[] = [
     { name: 'Registro', isActive: true },
     { name: 'Nome', isActive: true },
@@ -62,11 +64,11 @@ export class UsersControlPageComponent implements OnInit{
   createUserForm(id: string, name: string, birthDate: string, email: string, username: string, password: string){
     const formGroup = new FormGroup<UserForm>({
       id: new FormControl(id, [Validators.required]),
-      name: new FormControl(name, [Validators.required]),
-      birthDate: new FormControl(birthDate, [Validators.required]),
-      email: new FormControl(email, [Validators.required]),
-      username: new FormControl(username, [Validators.required]),
-      password: new FormControl(password, [Validators.required, Validators.minLength(2)])
+      name: new FormControl(name, [Validators.required, noSpecialCharacters]),
+      birthDate: new FormControl(birthDate, [Validators.required, Validators.pattern(''), validBornDate]),
+      email: new FormControl(email, [Validators.required, Validators.email]),
+      username: new FormControl(username, [Validators.required, noSpaceAllowed]),
+      password: new FormControl(password, [Validators.required, Validators.minLength(5), noSpaceAllowed, requiredSpecialCharacters])
     });
 
     (this.userForm.get('user') as FormArray).push(formGroup);
@@ -82,6 +84,11 @@ export class UsersControlPageComponent implements OnInit{
   }
   getAllUsersForm(): FormArray{
     return this.userForm.get("user") as FormArray;
+  }
+
+  getUserFormControl(index: number, controlName: string): FormControl{
+    const selectedUserGroup = this.userForm.get('user')?.get([index]) as FormGroup;
+    return selectedUserGroup.controls[controlName] as FormControl;
   }
   
   editUser(userForm: AbstractControl, validation: boolean, id: string,
@@ -383,4 +390,6 @@ export class UsersControlPageComponent implements OnInit{
       e.classList.remove('registry__header-cell__sort--active');
     }));
   }
+
 }
+

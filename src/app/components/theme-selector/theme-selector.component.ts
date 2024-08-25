@@ -48,8 +48,7 @@ export class ThemeSelectorComponent implements OnInit {
     const element = event.target as HTMLElement;
     event.stopPropagation();
     if (this.isExpanded === false) {
-      element.style.zIndex = '1000'; // Set z-index to make sure the dropdown is on top of other elements
-      console.log(element)
+      element.style.zIndex = '100'; // Set z-index to make sure the dropdown is on top of other elements
     } else {
       element.style.zIndex = 'auto'; // Reset z-index
     }

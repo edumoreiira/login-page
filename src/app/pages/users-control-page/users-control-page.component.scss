@@ -241,6 +241,10 @@
         &--modified{
             color: hsl(var(--card-foreground));
         }
+
+        &.ng-invalid{
+            color: hsl(var(--destructive));
+        }
     }
 
     // &__row--deleted{

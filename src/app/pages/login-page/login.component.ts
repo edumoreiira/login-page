@@ -18,6 +18,7 @@ import { AlertService } from '../../services/alert.service';
 export class LoginComponent {
 
   loginForm!: FormGroup<LoginForm>;
+  private readonly sessionKey = 'session';
 
   constructor(
     private router: Router,
@@ -36,12 +37,13 @@ export class LoginComponent {
         this.loginForm.value.username,
         this.loginForm.value.password
       ).subscribe({
-        next: () => {
+        next: (data: any) => {
           this.alertService.emitAlert({
             title: 'Login bem sucedido!',
             description: 'Seja bem-vindo!',
             color: 'green'
           });
+          sessionStorage.setItem(this.sessionKey, data.id);
           setTimeout(() => this.navigateTo('admin'), 500);
         },
         error: () => this.alertService.emitAlert({
