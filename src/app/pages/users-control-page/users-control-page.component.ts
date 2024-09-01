@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { LoginRegisterLayoutComponent } from '../../components/login-register-layout/login-register-layout.component';
 import { CommonModule } from '@angular/common';
 import { User, UserForm } from '../../models/user.interface';
@@ -88,6 +88,7 @@ export class UsersControlPageComponent implements OnInit{
 
   getUserFormControl(index: number, controlName: string): FormControl{
     const selectedUserGroup = this.userForm.get('user')?.get([index]) as FormGroup;
+    console.log(selectedUserGroup.controls[controlName])
     return selectedUserGroup.controls[controlName] as FormControl;
   }
   
@@ -389,6 +390,14 @@ export class UsersControlPageComponent implements OnInit{
     sortElements.forEach((e => {
       e.classList.remove('registry__header-cell__sort--active');
     }));
+  }
+
+  isInputFocus(inputElement: HTMLElement): boolean {
+    const focusedElement = document.activeElement as HTMLElement;
+    if(inputElement === focusedElement){
+      return true;
+    }
+    return false;
   }
 
 }

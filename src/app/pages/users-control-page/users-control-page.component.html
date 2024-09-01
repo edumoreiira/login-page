@@ -150,37 +150,103 @@ pageTitle="Painel de controle dos usuários"
                             </td>
                             
                             <td class="editor__cell editor__cell--name" [title]="user.value.name">
-                                <input type="text" class="editor__input"
+                                <input #editorNameInput type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified': user.value.name !== userControl[i].name}"
                                 formControlName="name">
-                                @if(getUserFormControl(i, 'name').invalid) {
-                                    <i class="fi fi-rr-info"></i>
+                                @if(getUserFormControl(i, 'name').invalid && isInputFocus(editorNameInput)) {
+                                    <div class="editor__input__invalid" @fadeInOut>
+                                        <div class="editor__input__invalid__header">
+                                            <i class="fi fi-rr-info editor__input__invalid__icon"></i>
+                                            <h4>Nome inválido</h4>
+                                        </div>
+                                        @if(getUserFormControl(i, 'name').errors?.['required']){
+                                            <span class="editor__input__invalid__message">Campo obrigatório</span>
+                                        } @else if(getUserFormControl(i, 'name').errors?.['noSpecialCharacters']){
+                                            <span class="editor__input__invalid__message">Caracteres especiais não são permitidos</span>
+                                        }
+                                    </div>
                                 }
                             </td>
                             
                             <td class="editor__cell editor__cell--birthDate" [title]="user.value.birthDate">
-                                <input type="date" class="editor__input"
+                                <input #editorBirthDateInput type="date" class="editor__input"
                                 [ngClass]="{'editor__input--modified' : user.value.birthDate !== userControl[i].birthDate}"
                                 formControlName="birthDate"> 
+                                @if(getUserFormControl(i, 'birthDate').invalid && isInputFocus(editorBirthDateInput)) {
+                                    <div class="editor__input__invalid" @fadeInOut>
+                                        <div class="editor__input__invalid__header">
+                                            <i class="fi fi-rr-info editor__input__invalid__icon"></i>
+                                            <h4>Data inválida</h4>
+                                        </div>
+                                        @if(getUserFormControl(i, 'birthDate').errors?.['required']){
+                                            <span class="editor__input__invalid__message">Campo obrigatório</span>
+                                        } @else if(getUserFormControl(i, 'birthDate').errors?.['invalidDateFormat']){
+                                            <span class="editor__input__invalid__message">{{getUserFormControl(i, 'birthDate').errors?.['invalidDateFormat']}}</span>
+                                        }
+                                    </div>
+                                }
                             </td>
                             
                             <td class="editor__cell editor__cell--email" [title]="user.value.email">
-                                <input type="text" class="editor__input"
+                                <input #editorEmailInput type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified' : user.value.email !== userControl[i].email}"
-                                formControlName="email"> 
+                                formControlName="email">
+                                @if(getUserFormControl(i, 'email').invalid && isInputFocus(editorEmailInput)) {
+                                    <div class="editor__input__invalid" @fadeInOut>
+                                        <div class="editor__input__invalid__header">
+                                            <i class="fi fi-rr-info editor__input__invalid__icon"></i>
+                                            <h4>Email inválido</h4>
+                                        </div>
+                                        @if(getUserFormControl(i, 'email').errors?.['required']){
+                                            <span class="editor__input__invalid__message">Campo obrigatório</span>
+                                        } @else if(getUserFormControl(i, 'email').errors?.['email']){
+                                            <span class="editor__input__invalid__message">Formato inválido</span>
+                                        }
+                                    </div>
+                                }
                             </td>
                         
                             <td class="editor__cell editor__cell--username" [title]="user.value.username">
-                                <input type="text" class="editor__input"
+                                <input #editorUsernameInput type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified' : user.value.username !== userControl[i].username}"
                                 formControlName="username"> 
+                                @if(getUserFormControl(i, 'username').invalid && isInputFocus(editorUsernameInput)) {
+                                    <div class="editor__input__invalid" @fadeInOut>
+                                        <div class="editor__input__invalid__header">
+                                            <i class="fi fi-rr-info editor__input__invalid__icon"></i>
+                                            <h4>Nome de usuário inválido</h4>
+                                        </div>
+                                        @if(getUserFormControl(i, 'username').errors?.['required']){
+                                            <span class="editor__input__invalid__message">Campo obrigatório</span>
+                                        } @else if(getUserFormControl(i, 'username').errors?.['noSpaceAllowed']){
+                                            <span class="editor__input__invalid__message">Nome de usuário não pode conter espaço</span>
+                                        }
+                                    </div>
+                                }
                             </td>
                             
 
                             <td class="editor__cell editor__cell--password" [title]="user.value.password">
-                                <input type="text" class="editor__input"
+                                <input #editorPasswordInput type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified' : user.value.password !== userControl[i].password}"
                                 formControlName="password"> 
+                                @if(getUserFormControl(i, 'password').invalid && isInputFocus(editorPasswordInput)) {
+                                    <div class="editor__input__invalid" @fadeInOut>
+                                        <div class="editor__input__invalid__header">
+                                            <i class="fi fi-rr-info editor__input__invalid__icon"></i>
+                                            <h4>Senha inválida</h4>
+                                        </div>
+                                        @if(getUserFormControl(i, 'password').errors?.['required']){
+                                            <span class="editor__input__invalid__message">Campo obrigatório</span>
+                                        } @else if(getUserFormControl(i, 'password').errors?.['minlength']){
+                                            <span class="editor__input__invalid__message">A senha deve conter no mínimo 5 caracteres</span>
+                                        } @else if(getUserFormControl(i, 'password').errors?.['nosSpaceAllowed']){
+                                            <span class="editor__input__invalid__message">A senha não pode conter espaço</span>
+                                        } @else if(getUserFormControl(i, 'password').errors?.['requiredSpecialCharacters']){
+                                            <span class="editor__input__invalid__message">A senha deve conter no mínimo um caráctere especial: !&#64;#$%^&*</span>
+                                        }
+                                    </div>
+                                }
                             </td>
 
                             <td class="editor__cell editor__cell--actions-right" [ngClass]="{
