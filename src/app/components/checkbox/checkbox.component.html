@@ -1,0 +1,15 @@
+<div class="checkbox-wrapper">
+    <button
+        (click)="handleClick()"
+        role="checkbox"
+        [attr.aria-checked]="isChecked ? true : false"
+        [name]="nameAttribute"
+        [id]="nameAttribute"
+        >
+
+        <span *ngIf="isChecked" @fadeInOut>
+            <i class="fi fi-sr-check"></i>
+        </span>
+    </button>
+    <label [for]="nameAttribute">{{textLabel}}</label>
+</div>

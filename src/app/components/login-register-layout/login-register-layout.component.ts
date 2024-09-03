@@ -4,12 +4,13 @@ import { fadeInOut, popUp } from '../../animations/transition-animations';
 import { Alert } from '../../models/alert.interface';
 import { AlertService } from '../../services/alert.service';
 import { ThemeSelectorComponent } from '../theme-selector/theme-selector.component';
+import { CheckboxComponent } from "../checkbox/checkbox.component";
 
 
 @Component({
   selector: 'app-login-register-layout',
   standalone: true,
-  imports: [CommonModule, ThemeSelectorComponent],
+  imports: [CommonModule, ThemeSelectorComponent, CheckboxComponent],
   templateUrl: './login-register-layout.component.html',
   styleUrls: ['./login-register-layout.component.scss', './login-register-layout--large.component.scss'],
   animations: [fadeInOut, popUp]

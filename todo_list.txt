@@ -2,4 +2,5 @@ sort admin list
 enable / disable columns
 search bar
 show & hide password
+desable validators for edit panel
 paginacao
