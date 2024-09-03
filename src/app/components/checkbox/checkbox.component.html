@@ -2,12 +2,12 @@
     <button
         (click)="handleClick()"
         role="checkbox"
-        [attr.aria-checked]="isChecked ? true : false"
+        [attr.aria-checked]="checked ? true : false"
         [name]="nameAttribute"
         [id]="nameAttribute"
         >
 
-        <span *ngIf="isChecked" @fadeInOut>
+        <span *ngIf="checked" @fadeInOut>
             <i class="fi fi-sr-check"></i>
         </span>
     </button>

@@ -14,11 +14,11 @@ export class CheckboxComponent {
   @Input() textLabel: string = 'Checkbox';
   @Input({ required: true }) nameAttribute = 'checkbox';
   @Output() onClick = new EventEmitter<boolean>();
-  @Input() isChecked: boolean = false;
+  @Input() checked: boolean = false;
 
   handleClick(): void {
-    this.isChecked = !this.isChecked;
-    this.onClick.emit(this.isChecked);
+    this.checked = !this.checked;
+    this.onClick.emit(this.checked);
   }
 
 

@@ -8,10 +8,11 @@ import { DropdownListOptions } from '../../models/dropdown-list-options.interfac
 import { fadeInOut, parentAnimations, popUp, slide } from '../../animations/transition-animations';
 import { ButtonComponent } from '../../components/button/button.component';
 import { LoginSignupService } from '../../services/login-signup.service';
-import { BehaviorSubject, Observable, take } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ModalService } from '../../services/modal.service';
 import { noSpaceAllowed, noSpecialCharacters, requiredSpecialCharacters, validBornDate } from '../../validators/register-form.validators';
+import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 
 type UserStatus = 'edited' | 'error' | 'unchanged' | 'undo' | 'deleted';
 type TableSort =  'none' | 'registro-asc' | 'registro-desc' | 'nome-asc' | 'nome-desc' | 'data-asc' | 'data-desc' | 'email-asc' |
@@ -20,7 +21,7 @@ type TableSort =  'none' | 'registro-asc' | 'registro-desc' | 'nome-asc' | 'nome
   selector: 'app-users-control-page',
   standalone: true,
   imports: [LoginRegisterLayoutComponent, CommonModule, InputComponent, DropdownSelectionComponent, ButtonComponent,
-   ReactiveFormsModule, FormsModule],
+   ReactiveFormsModule, FormsModule, CheckboxComponent],
   templateUrl: './users-control-page.component.html',
   styleUrl: './users-control-page.component.scss',
   animations: [slide, popUp, fadeInOut, parentAnimations]
@@ -31,6 +32,7 @@ export class UsersControlPageComponent implements OnInit{
   usersHasChanged: boolean = false;
   isEditorActive: boolean = false;
   showTableRows: boolean = true;
+  validatorsActive: boolean = true;
   sortedBy: TableSort = "none";
   userForm: FormGroup;
   private usersSubject = new BehaviorSubject<User[]>([]);
@@ -77,18 +79,57 @@ export class UsersControlPageComponent implements OnInit{
   removeUserForm(index: number){
     this.getAllUsersForm().removeAt(index);
   }
+
   getAllUsers(){
     this.controlService.getAllUsers().subscribe((data) => {
       this.usersSubject.next(data);
     })
   }
+
   getAllUsersForm(): FormArray{
     return this.userForm.get("user") as FormArray;
   }
 
+  updateValidators(){
+    const usersForm = this.getAllUsersForm();
+
+    function updateValueAndValidity(clearValidators: boolean): void{
+      usersForm.controls.forEach((userForm) => {
+        const userFormGroup = userForm as FormGroup;
+        (Object.values(userFormGroup.controls) as AbstractControl[]).forEach((control) => { //retorna um array com os controles do formulario
+          control.updateValueAndValidity();
+          if(clearValidators){
+            control.clearValidators();
+          }
+        })
+      });
+    }
+
+    if(this.validatorsActive === false){
+      usersForm.controls.forEach(() => {
+        updateValueAndValidity(true);
+      });
+    } else {
+      usersForm.controls.forEach((userForm) => {
+        const userFormGroup = userForm as FormGroup;
+        userFormGroup.controls['name'].setValidators([Validators.required, noSpecialCharacters]);
+        userFormGroup.controls['birthDate'].setValidators([Validators.required, Validators.pattern(''), validBornDate]);
+        userFormGroup.controls['email'].setValidators([Validators.required, Validators.email]);
+        userFormGroup.controls['username'].setValidators([Validators.required, noSpaceAllowed]);
+        userFormGroup.controls['password'].setValidators([Validators.required, Validators.minLength(5), noSpaceAllowed, requiredSpecialCharacters]);
+        
+        updateValueAndValidity(false);
+      });
+    }
+  }
+
+  toggleValidators(){
+    this.validatorsActive = !this.validatorsActive;
+    this.updateValidators();
+  }
+
   getUserFormControl(index: number, controlName: string): FormControl{
     const selectedUserGroup = this.userForm.get('user')?.get([index]) as FormGroup;
-    console.log(selectedUserGroup.controls[controlName])
     return selectedUserGroup.controls[controlName] as FormControl;
   }
   
@@ -262,6 +303,7 @@ export class UsersControlPageComponent implements OnInit{
   openEditor(){
     this.isEditorActive = true
     this.usersHasChanged = false;
+    this.updateValidators();
   }
 
   changeTable(tableName: string){

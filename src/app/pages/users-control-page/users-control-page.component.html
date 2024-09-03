@@ -214,7 +214,7 @@ pageTitle="Painel de controle dos usuários"
                                     <div class="editor__input__invalid" @fadeInOut>
                                         <div class="editor__input__invalid__header">
                                             <i class="fi fi-rr-info editor__input__invalid__icon"></i>
-                                            <h4>Nome de usuário inválido</h4>
+                                            <h4>Username inválido</h4>
                                         </div>
                                         @if(getUserFormControl(i, 'username').errors?.['required']){
                                             <span class="editor__input__invalid__message">Campo obrigatório</span>
@@ -230,8 +230,7 @@ pageTitle="Painel de controle dos usuários"
                                 <input #editorPasswordInput type="text" class="editor__input"
                                 [ngClass]="{'editor__input--modified' : user.value.password !== userControl[i].password}"
                                 formControlName="password"> 
-                                <!-- @if(getUserFormControl(i, 'password').invalid && isInputFocus(editorPasswordInput)) { -->
-                                @if(getUserFormControl(i, 'password').invalid) {
+                                @if(getUserFormControl(i, 'password').invalid && isInputFocus(editorPasswordInput)) {
                                     <div class="editor__input__invalid" @fadeInOut>
                                         <div class="editor__input__invalid__header">
                                             <i class="fi fi-rr-info editor__input__invalid__icon"></i>
@@ -289,12 +288,20 @@ pageTitle="Painel de controle dos usuários"
             </form>
         </div>
         <div class="editor__controllers">
+            <app-checkbox
+            textLabel="Validadores"
+            nameAttribute="disableValidatorsCheckbox"
+            [checked]="validatorsActive"
+            (onClick)="toggleValidators()"
+            style="flex-shrink: 0;"
+            ></app-checkbox>
             <app-button
             name="Aplicar todos"
             type="filled"
             [isExpanded]="true"
             [isDisabled]="isAllFormChanged() || userForm.invalid"
             (onClick)="editAllUsers(!userForm.invalid)"
+            style="width: min(180px, 100%);"
             ></app-button>
         </div>
     </div>
